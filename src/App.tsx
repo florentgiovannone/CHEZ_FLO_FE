@@ -1,5 +1,17 @@
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Nav from "./Components/Nav"
+import Home
+ from "./Components/Home"
 function App() {
-  return <h1>Hello Project 3!</h1>
+return(
+  <Router>
+    <Nav />
+    <Routes>
+      <Route path="/" element={<Home/>} />
+    </Routes>
+  </Router>
+)
 }
 
 export default App
