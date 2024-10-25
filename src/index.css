@@ -5,3 +5,11 @@
 * {
 font-family: comfortaa;
 }
+
+#root {
+    background-color: #E6DBC6;
+}
+
+#about, #menus, #reservation {
+    scroll-margin-top: 120px;
+}

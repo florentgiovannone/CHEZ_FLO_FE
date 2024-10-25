@@ -6,7 +6,7 @@ export default {
   theme: {
     colors: {
       beige: "#E6DBC6",
-      black: "#292726",
+      black: "#2F2C29",
     },
     extend: {
       fontFamily: {
