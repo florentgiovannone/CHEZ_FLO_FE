@@ -7,6 +7,8 @@ export default {
     colors: {
       beige: "#E6DBC6",
       black: "#2F2C29",
+      green: "#008000",
+      red: "#FF0000",
     },
     extend: {
       fontFamily: {
@@ -14,5 +16,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
