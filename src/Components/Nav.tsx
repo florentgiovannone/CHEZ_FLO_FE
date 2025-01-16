@@ -15,10 +15,10 @@ function classNames(...classes: string[]) {
 
 export default function Nav() {
     return (
-        <Disclosure as="nav" className=" text-beige sticky  top-0  z-10 bg-black backdrop-filter backdrop-blur-lg bg-opacity-50  firefox:bg-opacity-90">
-            <div className="h-28 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <Disclosure as="nav" className=" text-beige sticky  top-0  z-10 bg-black backdrop-filter backdrop-blur-md bg-opacity-50  firefox:bg-opacity-90">
+            <div className="h-28 mx-auto max-w-7xl px-2 sm:px-6 md:px-8">
                 <div className="relative flex h-16 items-center justify-between">
-                    <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                    <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
                         <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Open main menu</span>
@@ -26,7 +26,7 @@ export default function Nav() {
                             <XMarkIcon aria-hidden="true" className="hidden h-6 w-6 group-data-[open]:block" />
                         </DisclosureButton>
                     </div>
-                    <div className="mt-10 flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                    <div className="mt-10 flex flex-1 items-center justify-center md:items-stretch md:justify-start">
                         <a href="/">
                             <div className="flex flex-shrink-0 items-center">
                                 <img
@@ -55,7 +55,7 @@ export default function Nav() {
                         </div>
 
                     </div>
-                    <div className="hidden sm:block mt-3 text-gray-900">
+                    <div className="hidden md:block mt-3 text-gray-900">
                         <div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
                             <a target="_blank" href="https://www.facebook.com/" >
                                 <span className="[&>svg]:h-5 [&>svg]:w-5">
@@ -120,7 +120,7 @@ export default function Nav() {
                     ))}
                 </div>
                 <div className="  md:block  space-x-4 text-gray-900">
-                    <div className='  flex justify-start space-x-4 lg:space-x-8 pb-4 pt-1 px-1 text-right text-2xl font-bold'>
+                    <div className='  flex justify-start space-x-4 md:space-x-8 pb-4 pt-1 px-1 text-right text-2xl font-bold'>
                         <a target="_blank" href="https://www.facebook.com/" >
                             <span className="[&>svg]:h-5 [&>svg]:w-5">
                                 <svg
