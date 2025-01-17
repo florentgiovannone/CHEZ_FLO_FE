@@ -1,4 +1,4 @@
-export default function ({}) {
+export default function () {
     return <>
         <div className="my-24 flex flex-col justify-center items-center">
             <div className="mb-10">

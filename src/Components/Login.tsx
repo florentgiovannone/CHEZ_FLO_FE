@@ -1,20 +1,76 @@
-import { Button } from "@material-tailwind/react";
+import { ChangeEvent, SyntheticEvent, useState } from "react"
+import axios from 'axios'
+import { useNavigate } from "react-router-dom"
+import { baseUrl } from "../config";
 
-export default function Login() {
+
+export default function Login({ fetchUser }: { fetchUser: Function }) {
+    const [formData, setFormData] = useState({
+        username: "",
+        password: ""
+    })
+
+    function handleChange(e: ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }))
+    }
+console.log(formData);
+
+    const navigate = useNavigate()
+    const [errorMessage, setErrorMessage] = useState("")
+
+    async function handleSubmit(e: SyntheticEvent) {
+        e.preventDefault();
+        try {
+            const resp = await axios.post(`${baseUrl}/login`, formData);
+            localStorage.setItem('token', resp.data.token);
+            await fetchUser();
+            navigate('/dashboard');
+            console.log(resp);
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                setErrorMessage(error.response.data.error || "An unexpected error occured1")
+            } else {
+                console.error("Error during login", error);
+                setErrorMessage("An unexpected error occured2");
+            }
+        }
+    }
+
     return (
         <>
             <div className="my-52 lg:my-32 flex flex-col justify-center items-center">
-            <div className="mb-10">            
-                <input placeholder="email" type="email" className=" form-input rounded-full w-96 h-12" />
-            </div>
-                <div className="mb-10">
-                    <input placeholder="Password" type="password" className="form-input rounded-full w-96 h-12" />
-            </div>
-                <div>
-                    <Button size="lg" className="rounded-full w-96 h-12 bg-black text-beige" nonce={undefined} onResize={undefined} onResizeCapture={undefined}>
-                        Submit
-                    </Button>
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-10">
+                        <input  
+                        className=" form-input rounded-full w-96 h-12"
+                        placeholder="Username"
+                        type="text"
+                        name={'username'}
+                        onChange={handleChange}
+                        value={formData.username} />
+                    </div>
+                    <div className="mb-10">
+                        <input 
+                        className="form-input rounded-full w-96 h-12"
+                        placeholder="Password"
+                        type="password"
+                        name={'password'}
+                        onChange={handleChange}
+                        value={formData.password}
+                        />
+                    </div>
+                    {errorMessage && <small className="has-text-danger">{errorMessage}</small>}
+                    <div>
+                        <button className="rounded-full w-96 h-12 bg-black text-beige">Submit</button>
+                    </div>
+
+
+                </form>
+                
         </div>
         </>
     )
