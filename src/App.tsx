@@ -8,6 +8,7 @@ import Home from "./Components/Home"
 import Login from "./Components/Login"
 import Signup from "./Components/Signup"
 import Dashboard from "./Components/Dashboard"
+import UpdateAccount from "./Components/UpdateAccount";
 import Footer from "./Components/Footer"
 
 declare global {
@@ -22,9 +23,9 @@ function App() {
     const resp = await axios.get(`${baseUrl}/user`, {
       headers: { Authorization: `Bearer ${token}` }
     })
-    console.log(user);
     setUser(resp.data)
   }
+  console.log(user);
   
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -40,6 +41,7 @@ return(
         <Route path="/login" element={<Login fetchUser={fetchUser} user={user} />} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/dashboard" element={<Dashboard user={user} setUser={setUser} />} />
+        <Route path="/updateaccount/:userId" element={<UpdateAccount />} />
       </Routes>
     <Footer />
     </Router>
