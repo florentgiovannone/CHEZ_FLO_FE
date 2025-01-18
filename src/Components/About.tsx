@@ -1,4 +1,3 @@
-import { CgBorderStyleDotted } from "react-icons/cg";
 import { FaDiamond } from "react-icons/fa6";
 import { Button } from "@material-tailwind/react";
 

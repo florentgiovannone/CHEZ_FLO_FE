@@ -1,10 +1,15 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
+import { IUser } from "../interfaces/users";
 import { baseUrl } from "../config";
 
+interface LoginProps {
+    user: null | IUser;
+    fetchUser: Function;
+}
 
-export default function Login({ fetchUser }: { fetchUser: Function }) {
+export default function Login({ user, fetchUser }: LoginProps) {
     const [formData, setFormData] = useState({
         username: "",
         password: ""
@@ -29,7 +34,7 @@ console.log(formData);
             localStorage.setItem('token', resp.data.token);
             await fetchUser();
             navigate('/dashboard');
-            console.log(resp);
+            console.log(resp.data);
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 setErrorMessage(error.response.data.error || "An unexpected error occured1")
@@ -41,7 +46,7 @@ console.log(formData);
     }
 
     return (
-        <>
+        <>{ !user ? (
             <div className="my-52 lg:my-32 flex flex-col justify-center items-center">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-10">
@@ -71,7 +76,21 @@ console.log(formData);
 
                 </form>
                 
-        </div>
+        </div> ) : (
+                <div className="m-28">
+                    <div className="mb-10">
+                        <h1 className="text-3xl">You are already loged in, please enter the dashboard</h1>
+                    </div>
+                    <div>
+                        <a href="/dashboard">
+                            <button
+                                className="rounded-full w-96 h-12 bg-black text-beige">To Dashboard
+                            </button>
+                        </a>
+                    </div>
+                </div>
+        )
+        }
         </>
     )
 }
