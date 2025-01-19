@@ -45,14 +45,33 @@ export default function updateAccount() {
     }
     function handleUpload(e: SyntheticEvent) {
         e.preventDefault()
-        window.cloudinary
-            .createUploadWidget(
-                {
-                    cloudName: "ded4jhx7i",
-                    uploadPreset: "chezflo",
-                    cropping: true,
-                    croppingAspectRatio: 1
+
+        window.cloudinary.createUploadWidget(
+            {
+                cloudName: "ded4jhx7i",
+                uploadPreset: "chezflo",
+                cropping: true,
+                croppingAspectRatio: 1,
+                croppingShape: "circle",
+                croppingCoordinatesMode: "custom",
+                showSkipCropButton: false,
+                styles: {
+                    palette: {
+                        window: "#E6DBC6",
+                        sourceBg: "#E6DBC6",
+                        windowBorder: "#2F2C29",
+                        tabIcon: "#2F2C29",
+                        inactiveTabIcon: "#2F2C29",
+                        menuIcons: "#E6DBC6",
+                        link: "#2F2C29",
+                        action: "#2F2C29",
+                        inProgress: "#2F2C29",
+                        complete: "#2F2C29",
+                        error: "#FF0000",
+                        textDark: "#2F2C29",
+                    },
                 },
+            },
                 (err: any, result: { event: string; info: { secure_url: any; }; }) => {
                     if (result.event !== "success") {
                         return;

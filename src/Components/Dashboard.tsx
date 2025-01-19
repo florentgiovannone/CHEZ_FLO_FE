@@ -20,15 +20,16 @@ export default function Dashboard({ user, setUser }: UserProps) {
                 <h1 className="text-2xl">Welcome {user?.firstname}</h1>
                     <div className="mt-5 flex items-center justify-center h-full">
                         {!user.image ? (
-                            <figure className="w-32">
+                            <figure className="w-32 ">
                                 <img
                                     alt="Placeholder"
                                     src="https://cdn.pixabay.com/photo/2017/02/23/13/05/avatar-2092113_1280.png"
                                 />
                             </figure>
                         ) : (
-                            <figure className="w-32">
+                            <figure className="w-32 ">
                                 <img
+                                        className="rounded-full border-4 border-black"
                                     src={user.image}
                                     alt="Placeholder image"
                                 />
