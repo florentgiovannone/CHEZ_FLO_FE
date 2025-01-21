@@ -32,12 +32,15 @@ function App() {
     if (token) fetchUser()
   }, [])
 
+
+
+
 return(
   <>
     <Router>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home/>} /> 
+        <Route path="/" element={<Home  />} /> 
         <Route path="/login" element={<Login fetchUser={fetchUser} user={user} />} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/dashboard" element={<Dashboard user={user} setUser={setUser} />} />

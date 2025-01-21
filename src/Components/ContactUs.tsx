@@ -1,7 +1,13 @@
 import { FaDiamond } from "react-icons/fa6";
 import Map from "../Assets/Images/Map.png"
+import { IContent } from "../interfaces/content";
 
-export default function ContactUs() {
+interface ContentProps {
+    content: null | IContent;
+    setContent: Function;
+}
+
+export default function ContactUs({ content }: ContentProps) {
     return (
         <>
             <span className='anchor' id='contact'></span>
@@ -10,7 +16,7 @@ export default function ContactUs() {
                     <h1 className=" justify-around text-md text-black text-center">Contact</h1>
                     <div className="m-5 flex justify-center items-center">
                         <FaDiamond className="text-sm" />
-                    </div>``
+                    </div>
                     <h2 className=" md:pb-5 text-3xl text-black text-center">
                         In the heart of Southfield
                     </h2>

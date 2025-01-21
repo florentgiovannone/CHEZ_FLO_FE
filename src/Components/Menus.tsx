@@ -1,17 +1,23 @@
 import { CgBorderStyleDotted } from "react-icons/cg";
 import { FaDiamond } from "react-icons/fa6";
 import { Button } from "@material-tailwind/react";
-
-const currentMenus = [
-    { name: 'Breakfast', href: '#', current: true },
-    { name: 'Lunch', href: '#', current: false },
-    { name: 'Dinner', href: '#', current: false },
-    { name: 'Winelist', href: '#', current: false },
-    { name: 'Cocktail', href: '#', current: false },
-]
+import { IContent } from "../interfaces/content";
 
 
-export default function Menus() {
+
+interface ContentProps {
+    content: null | IContent;
+    setContent: Function;
+}
+
+export default function Menus({ content }: ContentProps) {
+    const currentMenus = [
+        { name: `${content?.breakfast_menus_text}`, href: '#', current: true},
+        { name: `${content?.lunch_menus_text}`, href: '#', current: false},
+        { name: `${content?.dinner_menus_text}`, href: '#', current: false},
+        { name: `${content?.winelist_menus_text}`, href: '#', current: false},
+        { name: `${content?.cocktail_menus_text}`, href: '#', current: false},
+    ]
     return (
         <>
         <span className='anchor' id='menus'></span>
@@ -20,8 +26,8 @@ export default function Menus() {
                 <div className="m-5 flex justify-center items-center">
                     <FaDiamond className="text-sm"></FaDiamond>
                 </div>
-                {currentMenus.map((item) => (
-                    <a key={item.name}
+                {currentMenus.map((item, index) => (
+                    <a key={index}
                         href={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className="pb-5 text-3xl text-black text-center font-black">{item.name}</a>

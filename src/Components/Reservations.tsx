@@ -1,7 +1,13 @@
 import { FaDiamond } from "react-icons/fa6";
 import { Button } from "@material-tailwind/react";
+import { IContent } from "../interfaces/content";
 
-export default function Reservation() {
+interface ContentProps {
+    content: null | IContent;
+    setContent: Function;
+}
+
+export default function Reservation({ content }: ContentProps) {
     return (
         <>
             <span className='anchor' id='reservation'></span>
