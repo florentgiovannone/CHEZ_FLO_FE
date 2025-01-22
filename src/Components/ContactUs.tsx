@@ -1,5 +1,4 @@
 import { FaDiamond } from "react-icons/fa6";
-import Map from "../Assets/Images/Map.png"
 import { IContent } from "../interfaces/content";
 
 interface ContentProps {
@@ -18,24 +17,27 @@ export default function ContactUs({ content }: ContentProps) {
                         <FaDiamond className="text-sm" />
                     </div>
                     <h2 className=" md:pb-5 text-3xl text-black text-center">
-                        In the heart of Southfield
+                        {content?.contact_title}
                     </h2>
-                    <p className="text-md text-center">139 Beaumont Road</p>
-                    <p className="text-md text-center mb-10">London, SW19 6RY</p>
+                    <p className="text-md text-center">{content?.contact_adress_one}</p>
+                    <p className="text-md text-center mb-10">{content?.contact_adress_two}</p>
                     <div className="pb-10">
-                        <p className="text-md text-center">+44 (0) 234 567 8910</p>
-                        <p className="text-md text-center">reservations@chezflo.com</p>
+                        <p className="text-md text-center">{content?.phone}</p>
+                        <p className="text-md text-center">{content?.email}</p>
                     </div>
                     <div>
-                        <p className="text-md text-center">Monday-Friday ………… 07:30-23:00</p>
-                        <p className="text-md text-center">Saturday ……………… 08:00-23:00</p>
-                        <p className="text-md text-center">Sunday ……………… 08:00-18:00</p>
+                        <p className="text-md text-center font-extrabold">{content?.contact_opening_day_one}</p>
+                        <p className="text-md text-center font-thin italic pb-3">{content?.contact_opening_hours_one}</p>
+                        <p className="text-md text-center font-extrabold">{content?.contact_opening_day_two}</p>
+                        <p className="text-md text-center font-thin italic pb-3">{content?.contact_opening_hours_two}</p>
+                        <p className="text-md text-center font-extrabold">{content?.contact_opening_day_three}</p>
+                        <p className="text-md text-center font-thin italic pb-3">{content?.contact_opening_hours_three}</p>
                     </div>
                 </div>
                 <div className=" md:w-1/3  md:pb-40 md:flex md:items-center md:justify-center">
                     <img
                         alt="Company Logo"
-                        src={Map}
+                        src={`${content?.map}`}
                         className="h-auto w-auto"
                     />
                 </div>

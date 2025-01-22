@@ -13,39 +13,57 @@ export default function Reservation({ content }: ContentProps) {
             <span className='anchor' id='reservation'></span>
             <div className="flex flex-col w-2/3 mx-auto pb-40">
             
-                <h1 className=" text-3xl text-black text-center pb-5">Make a reservation</h1>
+                <h1 className=" text-3xl text-black text-center pb-5">{content?.reservation_title}</h1>
                 <p className="text-md text-center">
-                    We have outdoor seating available between noon and 4pm, which can be booked, or requested on arrival.
+                    {content?.reservation_text}
                 </p>
                 <div className="m-5 flex justify-center items-center">
                     <FaDiamond className="text-sm"></FaDiamond>
                 </div>
                 <div className="pb-10">
                     <h5 className=" text-3xl text-black text-center pb-5">Breakfast</h5>
-                    <p className="text-md text-center">
-                        Monday-Friday ……… 07.30-11.00
+                    <p className="text-md text-center font-extrabold">
+                        {content?.breakfast_timing_day_one}
                     </p>
-                    <p className="text-md text-center">
-                        Saturday-Sunday …… 08.00-11.00
+                    <p className="text-md text-center font-thin italic pb-3">
+                        {content?.breakfast_timing_hours_one}
+                    </p>
+                    <p className="text-md text-center font-extrabold">
+                        {content?.breakfast_timing_day_two}
+                    </p>
+                    <p className="text-md text-center font-thin italic ">
+                        {content?.breakfast_timing_hours_two}
                     </p>
                 </div>
                 <div className="pb-10">
                     <h5 className=" text-3xl text-black text-center pb-5">Lunch</h5>
-                <p className="text-md text-center">
-                    Monday-Saturday ……… 11.45-16.45
-                </p>
-                <p className="text-md text-center">
-                    Sunday …… 11.45-16.45
+                    <p className="text-md text-center font-extrabold">
+                        {content?.lunch_timing_day_one}
+                    </p>
+                    <p className="text-md text-center font-thin italic pb-3">
+                        {content?.lunch_timing_hours_one}
+                    </p>
+                    <p className="text-md text-center font-extrabold">
+                        {content?.lunch_timing_day_two}
+                    </p>
+                    <p className="text-md text-center font-thin italic ">
+                        {content?.lunch_timing_hours_two}
                     </p>
                 </div>
                 <div className="pb-10">
                     <h5 className=" text-3xl text-black text-center pb-5">Dinner</h5>
-                <p className="text-md text-center">
-                    Monday-Saturday ……… 17.00-22.15 (last reservation at 22.00)
-                </p>
-                <p className="text-md text-center">
-                    Sunday - Lunch menu will be available until 19.00 (last reservation at 17.00)
-                </p>
+                    <p className="text-md text-center font-extrabold">
+                        {content?.dinner_timing_day_one}
+                    </p>
+                    <p className="text-md text-center font-thin italic pb-3">
+                        {content?.dinner_timing_hours_one}
+                    </p>
+                    <p className="text-md text-center font-extrabold">
+                        {content?.dinner_timing_day_two}
+                    </p>
+                    <p className="text-md text-center font-thin italic ">
+                        {content?.dinner_timing_hours_two}
+                    </p>
                 </div>
                 <div className="flex justify-center pb-10">
                     <Button size="lg" className="text-center w-40 h-16 bg-black text-beige" nonce={undefined} onResize={undefined} onResizeCapture={undefined}>
@@ -53,19 +71,22 @@ export default function Reservation({ content }: ContentProps) {
                     </Button>
                 </div>
                 <p className="text-md text-center ">
-                    No availability for your required number of guests?
+                    {content?.reservation_line_one}
                 </p>
                 <p className="text-md text-center">
-                    Call us to discuss your booking.
+                    {content?.reservation_line_two}
                 </p>
-                <p className="text-md text-center">
-                    +44 (0) 234 567 8910
-                </p>
-                <p className="text-md text-center">
-                    reservations@chezflo.com
-                </p>
+                <a href={"tel:" + content?.phone}>
+                    <p className="text-md text-center">
+                        {content?.phone}
+                    </p>
+                </a>
+                <a href={"mailto:" + content?.email}>
+                    <p className="text-md text-center">
+                        {content?.email}
+                    </p>
+                </a>
             </div>
-
         </>
     )
 }

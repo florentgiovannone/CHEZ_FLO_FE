@@ -42,7 +42,7 @@ export default function GridGallery({ content }: ContentProps) {
                     </div>
                     <div>
                         <img
-                            className="h-auto max-w-full rounded-lg object-cover object-center"
+                            className=" h-auto max-w-full rounded-lg object-cover object-center"
                             src={`${content?.image_five}`}
                             alt="gallery-photo"
                         />

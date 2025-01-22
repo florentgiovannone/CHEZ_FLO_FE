@@ -32,15 +32,23 @@ function App() {
     if (token) fetchUser()
   }, [])
 
+  const [content, setContent] = useState(null)
+  async function fetchContent() {
+    const resp = await axios.get(`${baseUrl}/content`)
+    setContent(resp.data[0])
+    console.log(resp.data[0].carousel_one);
+  }
 
-
-
+  useEffect(() => {
+    fetchContent()
+  }, [])
+  
 return(
   <>
     <Router>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home  />} /> 
+        <Route path="/" element={<Home content={content} setContent={setContent} />} /> 
         <Route path="/login" element={<Login fetchUser={fetchUser} user={user} />} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/dashboard" element={<Dashboard user={user} setUser={setUser} />} />

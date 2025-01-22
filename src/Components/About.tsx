@@ -12,7 +12,7 @@ export default function About({ content }: ContentProps) {
     return (
         <>
             <span className='anchor' id='about'></span>
-            <div className="flex flex-col w-2/3 mx-auto pb-40">
+            <div className="flex flex-col w-2/3 mx-auto pb-10">
                 <h1 className=" text-md text-black text-center">About Us</h1>
                 <div className="m-5 flex justify-center items-center">
                     <FaDiamond className="text-sm"></FaDiamond>
