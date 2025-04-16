@@ -11,11 +11,13 @@ interface ContentProps {
   setContent: Function;
 }
 
-export default function Home({ content, setContent }: ContentProps) {
-  console.log(content?.carousels[0].carousel_url);
+const Home = ({ content, setContent }: ContentProps) => {
+  console.log(content);
+
+  console.log(content?.carousels?.[0]?.carousel_url || "No carousel found");
 
   function slideMap() {
-    return content?.carousels.map((item) => item.carousel_url.toString()) || [];
+    return content?.carousels?.map((item) => item.carousel_url.toString()) || [];
   }
 
   let slides: string[] = slideMap();
@@ -32,4 +34,6 @@ export default function Home({ content, setContent }: ContentProps) {
       <ContactUs setContent={setContent} content={content} />
     </>
   );
-}
+};
+
+export default Home; 

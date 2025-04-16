@@ -13,8 +13,8 @@ function classNames(...classes: string[]) {
 
 export default function Footer() {
     return (
-        <div className="text-beige sticky bg-black flex flex-col items-center">
-            <div className=" flex flex-col items-center">
+        <div className="text-beige sticky bg-black flex flex-col items-center ">
+            <div className=" flex flex-col items-center ">
                 <a href="/">
                     <div className="flex flex-shrink-0 items-center justify-center py-10">
                         <img

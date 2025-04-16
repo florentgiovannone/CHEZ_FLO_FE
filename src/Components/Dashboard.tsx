@@ -54,7 +54,7 @@ export default function Dashboard({ user, setUser }: UserProps) {
                     </a>
                 </div>
                 <div>
-                    <a href="#" className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
+                        <a href="/changePassword" className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
                             <h5 className="text-2xl font-bold text-center">Update my Password</h5>
                     </a>
                 </div>
@@ -64,8 +64,8 @@ export default function Dashboard({ user, setUser }: UserProps) {
                     </a>
                 </div>
                 <div>
-                    <a href="#" className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
-                        <h5 className="text-2xl font-bold text-center">Delete a user</h5>
+                    <a href="/userlist" className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
+                        <h5 className="text-2xl font-bold text-center">Delete/Update a user</h5>
                     </a>
                 </div>
                     

@@ -1,6 +1,7 @@
 import Logo from "../Assets/Images/Logo.png"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { IUser } from "../interfaces/users"
 
 const navigation = [
     { name: 'About', href: '/#about', current: true },
@@ -12,10 +13,17 @@ const navigation = [
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
+interface UserProps {
+    user: null | IUser;
+    setUser: Function;
+}
+export default function Nav({ user, setUser }: UserProps) {
+    console.log(user);
 
-export default function Nav() {
     return (
+
         <Disclosure as="nav" className=" text-beige sticky  top-0  z-10 bg-black backdrop-filter backdrop-blur-md bg-opacity-50  firefox:bg-opacity-90">
+
             <div className="h-28 mx-auto max-w-7xl px-2 sm:px-6 md:px-8">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -56,7 +64,7 @@ export default function Nav() {
 
                     </div>
                     <div className="hidden md:block mt-3 text-gray-900">
-                        <div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
+{!user &&(                        <div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
                             <a target="_blank" href="https://www.facebook.com/" >
                                 <span className="[&>svg]:h-5 [&>svg]:w-5">
                                     <svg
@@ -97,8 +105,31 @@ export default function Nav() {
                                     </svg>
                                 </span>
                             </a>
-                        </div>
+
+                        </div>)}
+                        {user && (
+                            <div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
+                                <a  href="/dashboard">
+                                    {!user.image ? (
+                                        <figure className="w-10 ">
+                                            <img
+                                                alt="Placeholder"
+                                                src="https://cdn.pixabay.com/photo/2017/02/23/13/05/avatar-2092113_1280.png"
+                                            />
+                                        </figure>
+                                    ) : (
+                                        <figure className="w-16 ">
+                                            <img
+                                                className="rounded-full border-2 border-black"
+                                                src={user.image}
+                                                alt="Placeholder image"
+                                            />
+                                        </figure>
+                                    )}
+                                </a>
+                            </div>)}
                     </div>
+
                 </div>
             </div>
 
@@ -161,8 +192,11 @@ export default function Nav() {
                                 </svg>
                             </span>
                         </a>
+
                     </div>
+
                 </div>
+
             </DisclosurePanel>
         </Disclosure>
     )

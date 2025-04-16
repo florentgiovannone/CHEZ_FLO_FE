@@ -11,7 +11,7 @@ export default function updateAccount() {
     React.useEffect(() => {
         async function fetchUser() {
             const token = localStorage.getItem('token')
-            const resp = await axios.get(`${baseUrl}/user`, {
+const resp = await axios.get(`${baseUrl}/users/${userId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setFormData(resp.data)
@@ -47,7 +47,9 @@ export default function updateAccount() {
         e.preventDefault()
 
         window.cloudinary.createUploadWidget(
+            
             {
+                
                 cloudName: "ded4jhx7i",
                 uploadPreset: "chezflo",
                 cropping: true,
@@ -82,8 +84,10 @@ export default function updateAccount() {
                         ...formData,
                         image: result.info.secure_url,
                     });
-                }
+                },
+                
             )
+            
             .open();
     }
 

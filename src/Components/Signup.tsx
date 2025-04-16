@@ -181,12 +181,6 @@ export default function Signup() {
                     </div>
                     <div className="my-4">
                         <div className="flex flex-col gap-4">
-                            <button
-                                className="rounded-full w-full sm:w-96 h-12 bg-black text-beige hover:bg-opacity-50"
-                                onClick={handleUpload}
-                            >
-                                Click to upload an image
-                            </button>
                             <textarea
                                 placeholder="Image URL"
                                 onChange={handleChange}
@@ -194,6 +188,12 @@ export default function Signup() {
                                 value={formData.image}
                                 className="w-full p-4 border border-gray-300 rounded-md"
                             />
+                            <button
+                                className="sm:w-96 h-12 bg-black hover:bg-beige  text-beige hover:text-black border border-b-beige hover:border-black font-bold mr-2 rounded-xl"
+                                onClick={handleUpload}
+                            >
+                                Click to upload an image
+                            </button>
                         </div>
                     </div>
                     <div className="field  mt-4">
@@ -234,7 +234,7 @@ export default function Signup() {
                         {errorData && <p className="has-text-danger">{errorData}</p>}
                     </div>
                     <button
-                        className="button has-border-green mt-4" onClick={handleSubmit}>Submit
+                        className=" bg-black hover:bg-beige  text-beige hover:text-black border border-b-beige hover:border-black font-bold  p-4 mr-2 rounded-xl" onClick={handleSubmit}>Submit
                     </button>
                 </div>
             </div>
