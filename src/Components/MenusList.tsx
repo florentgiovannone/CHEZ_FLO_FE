@@ -4,31 +4,31 @@ import { useNavigate, useParams } from "react-router-dom"
 import { baseUrl } from "../config"
 import { IUser } from "../interfaces/users"
 
-interface UserProps {
-    allUsers: IUser[]
-    setallUsers: React.Dispatch<React.SetStateAction<IUser[]>>
+interface ContentProps {
+    content: null | IContent;
+    setContent: Function;
 }
 
-export default function UserList({ allUsers, setallUsers }: UserProps) {
+
+export default function MenusList({ content, setContent }: ContentProps) {
     const [showDeleted, setShowDeleted] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [deletedUserName, setDeletedUserName] = useState<string | null>(null)
     const [selectedUser, setSelectedUser] = useState<IUser | null>(null)
 
-    const { userId } = useParams()
-    const navigate = useNavigate()
+    // Get the contentId from the URL
+    const { contentId } = useParams()
+    // Add a menu fuction
 
-    function dismissMessage() {
-        setShowDeleted(false)
-        setSelectedUser(null)
-    }
-
-    async function deleteUser() {
+    // Update a menu function
+    
+    // Delete a menu function
+    async function deleteMenus() {
         if (!selectedUser) return
         const token = localStorage.getItem("token")
 
         try {
-            await axios.delete(`${baseUrl}/user/${selectedUser.id}`, {
+            await axios.delete(`${baseUrl}/users/${selectedUser.id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
 
@@ -41,7 +41,7 @@ export default function UserList({ allUsers, setallUsers }: UserProps) {
             alert("Something went wrong.")
         }
     }
-
+// Map the menus to the menus list
     const userMap = () =>
         allUsers?.map(user => (
             <div
@@ -69,7 +69,7 @@ export default function UserList({ allUsers, setallUsers }: UserProps) {
                 </div>
             </div>
         ))
-
+// Render the component
     return (
         <div className=" flex flex-col bg-white mt-40 mb-96">
             <main className="flex-grow flex flex-col items-center justify-start py-10 ">
@@ -124,12 +124,6 @@ export default function UserList({ allUsers, setallUsers }: UserProps) {
                             <h1 className="text-center text-lg font-semibold text-black bg-beige px-6 py-3 rounded-xl">
                                 {deletedUserName} has been deleted
                             </h1>
-                            <button
-                                onClick={dismissMessage}
-                                className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl"
-                            >
-                                Dismiss
-                            </button>
                         </div>
                     )}
                 </div>

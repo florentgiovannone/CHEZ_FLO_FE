@@ -12,9 +12,6 @@ interface ContentProps {
 }
 
 const Home = ({ content, setContent }: ContentProps) => {
-  console.log(content);
-
-  console.log(content?.carousels?.[0]?.carousel_url || "No carousel found");
 
   function slideMap() {
     return content?.carousels?.map((item) => item.carousel_url.toString()) || [];

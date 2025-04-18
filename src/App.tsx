@@ -10,18 +10,26 @@ import Dashboard from "./Components/Dashboard";
 import UpdateAccount from "./Components/UpdateAccount";
 import UserList from "./Components/UserList";
 import ChangePassword from "./Components/ChangePassword";
+import EditMainPage from "./Components/EditMainPage";
+import CarouselsList from "./Components/CarouselsList"
+import UpdateAllCarousels from "./Components/UpdateAllCarousels";
 import Footer from "./Components/Footer";
-import { IContent } from "./interfaces/content";  
+import { IContent } from "./interfaces/content";
+import UpdateAbout from "./Components/UpdateAbout";
+import MenusList from "./Components/MenusList";
+import { ICarousels } from "./interfaces/carousels";
 
 declare global {
   interface Window {
-    cloudinary: any;
+    cloudinary: {
+      createUploadWidget: (options: any, callback: (error: any, result: any) => void) => any;
+    };
   }
 }
 
 function App() {
   const [user, setUser] = useState<any>(null);
-  const [content, setContent] = useState<IContent | null>(null); 
+  const [content, setContent] = useState<IContent | null>(null);
   const [allUsers, setAllUsers] = useState<any[]>([]);
 
   async function fetchUser() {
@@ -42,7 +50,7 @@ function App() {
     try {
       const resp = await axios.get(`${baseUrl}/content`);
       if (Array.isArray(resp.data) && resp.data.length > 0) {
-        setContent(resp.data[0]); 
+        setContent(resp.data[0]);
         console.log(resp.data[0]);
       } else {
         console.error("Content data format is not as expected:", resp.data);
@@ -54,7 +62,7 @@ function App() {
 
   async function fetchAllUsers() {
     try {
-      const resp = await axios.get(`${baseUrl}/all_users`);
+      const resp = await axios.get(`${baseUrl}/users`);
       if (Array.isArray(resp.data) && resp.data.length > 0) {
         setAllUsers(resp.data);
       } else {
@@ -75,7 +83,7 @@ function App() {
   return (
     <>
       <Router>
-        <Nav user={user} setUser={setUser}/>
+        <Nav user={user} setUser={setUser} />
         <Routes>
           <Route path="/" element={<Home content={content} setContent={setContent} />} />
           <Route path="/login" element={<Login fetchUser={fetchUser} user={user} />} />
@@ -84,6 +92,11 @@ function App() {
           <Route path="/updateaccount/:userId" element={<UpdateAccount />} />
           <Route path="/userlist" element={<UserList allUsers={allUsers} setallUsers={setAllUsers} />} />
           <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/EditMainPage" element={<EditMainPage content={content} setContent={setContent} />} />
+          <Route path="/updateAllCarousels/:contentId" element={<UpdateAllCarousels />} />
+          <Route path="/updateAbout/:contentId/about" element={<UpdateAbout />} />
+          <Route path="/carouselsList/:contentId" element={<CarouselsList content={content} setContent={setContent} />} />
+          <Route path="/menusList/:contentId" element={<MenusList content={content} setContent={setContent} />} />
         </Routes>
         <Footer />
       </Router>

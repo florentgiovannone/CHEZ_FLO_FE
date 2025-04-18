@@ -11,7 +11,7 @@ export default function updateAccount() {
     React.useEffect(() => {
         async function fetchUser() {
             const token = localStorage.getItem('token')
-const resp = await axios.get(`${baseUrl}/users/${userId}`, {
+const resp = await axios.get(`${baseUrl}/user/${userId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setFormData(resp.data)
@@ -35,7 +35,7 @@ const resp = await axios.get(`${baseUrl}/users/${userId}`, {
     async function handleSubmit(e: SyntheticEvent) {
         e.preventDefault()
         const token = localStorage.getItem('token')
-        const resp = await axios.put(`${baseUrl}/users/${userId}`, formData, {
+        const resp = await axios.put(`${baseUrl}/user/${userId}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

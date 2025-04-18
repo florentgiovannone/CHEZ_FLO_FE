@@ -39,13 +39,13 @@ export default function Dashboard({ user, setUser }: UserProps) {
             </div>
                 <div className="m-10 grid grid-cols-1 gap-6 justify-center items-center md:grid-cols-2 xl:grid-cols-3">
                 <div>
-                    <a href="#" className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
+                        <a href="/EditMainPage" className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
                         <h5 className="text-2xl font-bold text-center">Update Main page</h5>
                     </a>
                 </div>
                 <div>
                     <a href="#" className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
-                        <h5 className="text-2xl font-bold text-center">Update Blog</h5>
+                        <h5 className="text-2xl font-bold text-center">Create / Update Blog</h5>
                     </a>
                 </div>
                 <div>
