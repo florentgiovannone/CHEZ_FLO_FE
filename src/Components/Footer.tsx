@@ -42,7 +42,7 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="hidden sm:block mt-3 text-gray-900">
+            <div className="mt-3 text-gray-900">
                 <div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
                     <a target="_blank" href="https://www.facebook.com/" >
                         <span className="[&>svg]:h-5 [&>svg]:w-5">

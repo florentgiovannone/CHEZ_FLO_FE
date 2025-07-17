@@ -7,7 +7,7 @@ const navigation = [
     { name: 'About', href: '/#about', current: true },
     { name: 'Menus', href: '/#menus', current: false },
     { name: 'Reservation', href: '/#reservation', current: false },
-    { name: 'Contact', href: '/#contact', current: false },
+    { name: 'Contact us', href: '/#contact', current: false },
 ]
 
 function classNames(...classes: string[]) {
@@ -18,14 +18,14 @@ interface UserProps {
     setUser: Function;
 }
 export default function Nav({ user, setUser }: UserProps) {
-    console.log(user);
+    // console.log(user);
 
     return (
 
         <Disclosure as="nav" className=" text-beige sticky  top-0  z-10 bg-black backdrop-filter backdrop-blur-md bg-opacity-50  firefox:bg-opacity-90">
 
             <div className="h-28 mx-auto max-w-7xl px-2 sm:px-6 md:px-8">
-                <div className="relative flex h-16 items-center justify-between">
+                <div className="relative flex h-28 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
                         <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                             <span className="absolute -inset-0.5" />
@@ -64,7 +64,7 @@ export default function Nav({ user, setUser }: UserProps) {
 
                     </div>
                     <div className="hidden md:block mt-3 text-gray-900">
-{!user &&(                        <div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
+                        {!user && (<div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
                             <a target="_blank" href="https://www.facebook.com/" >
                                 <span className="[&>svg]:h-5 [&>svg]:w-5">
                                     <svg
@@ -109,7 +109,7 @@ export default function Nav({ user, setUser }: UserProps) {
                         </div>)}
                         {user && (
                             <div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
-                                <a  href="/dashboard">
+                                <a href="/dashboard">
                                     {!user.image ? (
                                         <figure className="w-10 ">
                                             <img

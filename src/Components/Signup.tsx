@@ -92,6 +92,20 @@ export default function Signup() {
         }
     }
 
+    const handleConfirmation = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(`${baseUrl}/send-confirmation`, {
+                email: formData.email,
+                username: formData.username,
+            });
+            console.log("Confirmation email sent!");
+        } catch (error: any) {
+            console.error("Error:", error.response?.data || error.message);
+            setErrorData(error.response?.data?.error || "Failed to send confirmation email");
+        }
+    };
+
     const [existingUsers, setExistingUsers] = useState<IUser[] | null>(null);
     const [usernameMessage, setUsernameMessage] = useState(" ");
     function validateUsername(username: string) {
@@ -234,7 +248,11 @@ export default function Signup() {
                         {errorData && <p className="has-text-danger">{errorData}</p>}
                     </div>
                     <button
-                        className=" bg-black hover:bg-beige  text-beige hover:text-black border border-b-beige hover:border-black font-bold  p-4 mr-2 rounded-xl" onClick={handleSubmit}>Submit
+                        className=" bg-black hover:bg-beige  text-beige hover:text-black border border-b-beige hover:border-black font-bold  p-4 mr-2 rounded-xl" onClick={(e) => {
+                            if (handleSubmit) handleSubmit(e);
+                            handleConfirmation(e);
+                        }}
+                    >Submit
                     </button>
                 </div>
             </div>

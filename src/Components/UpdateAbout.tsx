@@ -2,33 +2,38 @@ import React, { SyntheticEvent, useState } from "react"
 import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 import { baseUrl } from "../config";
+import { IContent } from "../interfaces/content";
+import { IUser } from "../interfaces/users";
+import NotLogged from "./NotLogged";
 
+interface UpdateAboutProps {
+    setContent: React.Dispatch<React.SetStateAction<IContent | null>>;
+    content: IContent | null;
+}
 
-export default function UpdateAbout() {
-    // console.log(content?.carousels);
+interface UserProps {
+    user: null | IUser;
+    setUser: Function;
+}
 
+export default function UpdateAbout({ content, setContent, user }: UpdateAboutProps & UserProps) {
     const { contentId } = useParams()
     const navigate = useNavigate()
-
-    React.useEffect(() => {
-        async function fetchContent() {
-            try {
-                const resp = await axios.get(`${baseUrl}/content/${contentId}/about`);
-
-                setFormData(resp.data);
-                console.log(resp.data);
-                
-            } catch (err) {
-                console.error("Error fetching content:", err);
-            }
-        }
-        fetchContent();
-    }, []);
 
     const [formData, setFormData] = useState({
         about_title: "",
         about_text: "",
     })
+    
+    // Initialize form data with content values if they exist
+    React.useEffect(() => {
+        if (content) {
+            setFormData({
+                about_title: String(content.about_title) || "",
+                about_text: String(content.about_text) || ""
+            })
+        }
+    }, [content])
 
     function handleChange(e: any) {
         const fieldName = e.target.name
@@ -52,7 +57,7 @@ export default function UpdateAbout() {
     }
 
 
-    return <>
+    return <>{(user ? 
         <div className="section flex items-center justify-center min-h-screen bg-gray-50 px-4">
             <div className="container w-full ">
                 <h1 className="text-2xl">Update About section</h1>
@@ -82,23 +87,25 @@ export default function UpdateAbout() {
                             onClick={() => navigate(`/dashboard`)}
                             className="mb-5 rounded-xl w-full sm:w-96 h-12 bg-black text-beige hover:bg-opacity-50"
                         >
-                            Return to dashboard
+                            Cancel and return to dashboard
+                        </button>
+
+                        <button
+                            onClick={() => navigate(`/EditMainPage`)}
+                            className="mb-5 rounded-xl w-full sm:w-96 h-12 bg-black text-beige hover:bg-opacity-50"
+                        >
+                            Cancel and return to edit page
                         </button>
                         <button
                             onClick={handleSubmit}
                             className="mb-5 rounded-xl w-full sm:w-96 h-12 bg-black text-beige hover:bg-opacity-50"
                         >
-                            Update
-                        </button>
-                        <button
-                            onClick={() => navigate(`/EditMainPage`)}
-                            className="mb-5 rounded-xl w-full sm:w-96 h-12 bg-black text-beige hover:bg-opacity-50"
-                        >
-                            Return to edit page
+                            Update and return to dashboard
                         </button>
                     </div>
                 </form>
             </div>
-        </div>
-    </>
+        </div> :
+        <NotLogged />
+    )} </>
 }

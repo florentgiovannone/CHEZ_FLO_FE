@@ -1,42 +1,58 @@
-import { CgBorderStyleDotted } from "react-icons/cg";
 import { FaDiamond } from "react-icons/fa6";
-import { Button } from "@material-tailwind/react";
-import { IContent } from "../interfaces/content";
+import { IMenus } from "../interfaces/menus";
 
-
-
-interface ContentProps {
-    content: null | IContent;
+interface MenusProps {
+    menus: IMenus[];
     setContent: Function;
 }
 
-export default function Menus({ content }: ContentProps) {
-    const currentMenus = [
-        { name: `${content?.breakfast_menus_text}`, href: `${content?.breakfast_menus_file}`, current: true},
-        { name: `${content?.lunch_menus_text}`, href: `${content?.lunch_menus_file}`, current: false},
-        { name: `${content?.dessert_menus_text}`, href: `${content?.dessert_menus_file}`, current: false},
-        { name: `${content?.winelist_menus_text}`, href: `${content?.winelist_menus_file}`, current: false},
-        { name: `${content?.cocktail_menus_text}`, href: `${content?.cocktail_menus_file}`, current: false},
-    ]
+export default function Menus({ menus, setContent }: MenusProps) {
+    const menuOrder = [
+        "breakfast",
+        "lunch",
+        "dinner",
+        "winelist",
+        "cocktail",
+        "desserts",
+    ];
+
+    const sortedMenus = [...menus].sort((a, b) => {
+        const typeA = a.menus_type.toLowerCase();
+        const typeB = b.menus_type.toLowerCase();
+        const indexA = menuOrder.indexOf(typeA);
+        const indexB = menuOrder.indexOf(typeB);
+
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+        return typeA.localeCompare(typeB);
+    });
+
     return (
         <>
-        <span className='anchor' id='menus'></span>
-            <div className="flex flex-col w-2/3 mx-auto pb-10">
-                <h1 className=" text-md text-black text-center">Menus.</h1>
-                <div className="m-5 flex justify-center items-center">
-                    <FaDiamond className="text-sm"></FaDiamond>
-                </div>
-                {currentMenus.map((item, index) => (
-                    <a key={index}
-                        href={item.href}
-                        aria-current={item.current ? 'page' : undefined}
-                        className="pb-5 text-3xl text-black text-center font-black"
-                        target="_blank">{item.name}</a>
-                )
-                )}
-                
-            </div>
+            <span className="anchor" id="menus"></span>
+            <div className="flex flex-col w-full max-w-screen-md mx-auto px-4 py-10">
+                <h1 className="text-center text-lg sm:text-xl text-black">Menus.</h1>
 
+                <div className="my-4 flex justify-center items-center">
+                    <FaDiamond className="text-sm sm:text-base text-black" />
+                </div>
+
+                {sortedMenus?.map((item) => (
+                    <div key={item.id} className="pb-6">
+                        <a
+                            href={item.menus_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block"
+                        >
+                            <h2 className="text-center text-2xl sm:text-3xl text-black font-bold hover:underline">
+                                {item.menus_text}
+                            </h2>
+                        </a>
+                    </div>
+                ))}
+            </div>
         </>
-    )
+    );
 }

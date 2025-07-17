@@ -1,4 +1,5 @@
 import { IUser } from "../interfaces/users";
+import NotLogged from "./NotLogged";
 
 interface UserProps {
     user: null | IUser;
@@ -80,19 +81,7 @@ export default function Dashboard({ user, setUser }: UserProps) {
                 </div>
         </div>
         ) : (
-                <div className="m-28">
-                    <div className="mb-10">
-                    <h1 className="text-3xl">You are not loged in, please login before entering the dashboard</h1>
-                </div>
-                    <div>
-                        <a href="/login">
-                            <button
-                                onClick={logout}
-                                className="rounded-full w-96 h-12 bg-black text-beige">Login
-                            </button>
-                        </a>
-                    </div>
-            </div>
+            <NotLogged />
         ) 
     }
     </>
