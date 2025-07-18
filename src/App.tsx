@@ -12,7 +12,7 @@ import UserList from "./Components/UserList";
 import ChangePassword from "./Components/ChangePassword";
 import EditMainPage from "./Components/EditMainPage";
 import UpdateCarousels from "./Components/UpdateCarousels"
-import UpdateAllCarousels from "./Components/UpdateAllCarousels";
+// import UpdateAllCarousels from "./Components/UpdateAllCarousels";
 import Footer from "./Components/Footer";
 import { IContent } from "./interfaces/content";
 import UpdateAbout from "./Components/UpdateAbout";
@@ -22,7 +22,6 @@ import { ICarousels } from "./interfaces/carousels";
 import { IMenus } from "./interfaces/menus";
 import UpdateContact from "./Components/UpdateContact";
 import UpdateGrid from "./Components/UpdateGrid";
-import { IGrid } from "./interfaces/grid";
 declare global {
   interface Window {
     cloudinary: {
@@ -141,7 +140,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home content={content} setContent={setContent} menus={menus} setMenus={setMenus} carousels={carousels} setCarousels={setCarousels} grid={grid} setGrid={setGrid} menusId={""} menusType={""} menusText={""} menusUrl={""} />} />
           <Route path="/login" element={<Login fetchUser={fetchUser} user={user} />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<Signup user={user} setUser={setUser} />} />
           <Route path="/dashboard" element={<Dashboard user={user} setUser={setUser} />} />
           <Route path="/updateaccount/:userId" element={<UpdateAccount user={user} setUser={setUser} />} />
           <Route path="/userlist" element={<UserList allUsers={allUsers} setallUsers={setAllUsers} />} />

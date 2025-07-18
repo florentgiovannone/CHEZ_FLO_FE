@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { IUser } from "../interfaces/users";
 import { baseUrl } from "../config";
+import NotLogged from "./NotLogged";
 
 interface ValidationState {
     usernameValid: boolean;
@@ -32,7 +33,12 @@ function validationReducer(state: ValidationState, action: Partial<ValidationSta
     return { ...state, ...action }
 }
 
-export default function Signup() {
+interface UserProps {
+    user: null | IUser;
+    setUser: Function;
+}
+
+export default function Signup({ user, setUser }: UserProps) {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState<Omit<IUser, "id"> & { password: string; password_confirmation: string }>({
@@ -149,6 +155,7 @@ export default function Signup() {
     }, [])
 
     return (
+        user ? (
         <>
             <div className="section flex items-center justify-center min-h-screen bg-gray-50 px-4 py-5">
                 <div className="container w-full ">
@@ -257,5 +264,7 @@ export default function Signup() {
                 </div>
             </div>
         </>
-    )
+    ) : (
+        <NotLogged />
+    ))
 }
