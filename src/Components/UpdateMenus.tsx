@@ -274,26 +274,26 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
         return sortedMenus.map((menu: IMenus) => (
             <div
                 key={menu.id}
-                className="bg-black text-beige my-2 p-3 md:p-4 rounded-xl"
+                className="bg-black text-beige p-3 sm:p-4 rounded-xl"
             >
                 {selectedMenu?.id === menu.id && showUpdateForm ? (
-                    <div key={`form-${menu.id}`} className="space-y-3 md:space-y-4">
-                        <div className="w-full md:w-32 h-40">
+                    <div key={`form-${menu.id}`} className="space-y-3">
+                        <div className="w-full h-40">
                             <iframe
                                 src={menu.menus_url ? menu.menus_url.toString() : ''}
-                                className="w-full h-full rounded-xl border-4 border-black cursor-pointer hover:border-beige transition-all duration-200"
+                                className="w-full h-full rounded-lg border-4 border-black cursor-pointer hover:border-beige transition-all duration-200"
                                 title={`${menu.menus_type} menu preview`}
                                 onClick={() => window.open(menu.menus_url ? menu.menus_url.toString() : '', '_blank')}
                             />
                         </div>
-                        <form key={`form-inner-${menu.id}`} className="space-y-3 md:space-y-4">
+                        <form key={`form-inner-${menu.id}`} className="space-y-3">
                             <textarea
                                 key={`textarea-${menu.id}`}
                                 placeholder="Menu name"
                                 onChange={handleChange}
                                 name={`menus_text_${menu.id}`}
                                 value={formData[`menus_text_${menu.id}`] || ""}
-                                className="text-black border border-gray-300 rounded-xl p-2 w-full text-sm md:text-base"
+                                className="text-black border border-gray-300 rounded-lg p-3 w-full text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
                             />
                             <textarea
                                 key={`textarea-${menu.id}`}
@@ -301,10 +301,10 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                                 onChange={handleChange}
                                 name={`menus_url_${menu.id}`}
                                 value={formData[`menus_url_${menu.id}`] || ""}
-                                className="text-black border border-gray-300 rounded-xl p-2 w-full bg-beige text-sm md:text-base"
+                                className="text-black border border-gray-300 rounded-lg p-3 w-full bg-beige text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
                                 disabled={true}
                             />
-                            <div key={`buttons-${menu.id}`} className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            <div key={`buttons-${menu.id}`} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 <button
                                     key={`upload-btn-${menu.id}`}
                                     onClick={(e) => {
@@ -313,7 +313,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                                         setUploadButton(false)
                                     }}
                                     type="submit"
-                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 >
                                     Edit Menu
                                 </button>
@@ -325,7 +325,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                                         setShowUpdateForm(false)
                                         setUploadButton(false)
                                     }}
-                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 >
                                     Save
                                 </button>
@@ -333,7 +333,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                                     key={`cancel-btn-${menu.id}`}
                                     onClick={() => setShowUpdateForm(false)}
                                     type="button"
-                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 >
                                     Cancel
                                 </button>
@@ -341,84 +341,236 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                         </form>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 items-center">
-                        <div className="w-full md:w-32 h-40 flex justify-center items-center">
+                    <div className="space-y-3">
+                        <div className="w-full h-40 flex justify-center items-center">
                             <iframe
                                 src={menu.menus_url ? menu.menus_url.toString() : ''}
-                                className="w-full h-full rounded-xl border-4 border-black cursor-pointer hover:border-beige transition-all duration-200"
+                                className="w-full h-full rounded-lg border-4 border-black cursor-pointer hover:border-beige transition-all duration-200"
                                 title={`${menu.menus_text} menu preview`}
                                 onClick={() => window.open(menu.menus_url ? menu.menus_url.toString() : '', '_blank')}
                             />
                         </div>
-                        <a href={menu.menus_url ? menu.menus_url.toString() : ''} className="md:col-span-8" target="_blank">
-                            <div key={`id-${menu.id}`} className="text-center text-sm md:text-base">{menu.menus_text}</div>
+                        <a href={menu.menus_url ? menu.menus_url.toString() : ''} className="block" target="_blank">
+                            <div key={`id-${menu.id}`} className="text-center text-sm sm:text-base font-medium">
+                                {menu.menus_text}
+                            </div>
                         </a>
-                        <div key={`buttons-${menu.id}`} className="grid grid-cols-1 md:grid-cols-2 gap-2 md:col-span-3">
-                            {!(selectedMenu?.id === menu.id && showUpdateForm) && (
-                                <>
-                                    <button
-                                        key={`update-action-${menu.id}`}
-                                        onClick={(e) => {
-                                            e.preventDefault()
-                                            setSelectedMenu(menu)
-                                            setShowUpdateForm(true)
-                                            setFormData({
-                                                [`menus_url_${menu.id}`]: String(menu.menus_url),
-                                                [`menus_type_${menu.id}`]: menu.menus_type,
-                                                [`menus_text_${menu.id}`]: menu.menus_text
-                                            })
-                                        }}
-                                        className="h-16 md:h-24 w-full bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                                    >
-                                        Update
-                                    </button>
-                                    <button
-                                        key={`delete-action-${menu.id}`}
-                                        onClick={() => {
-                                            setSelectedMenu(menu)
-                                            setShowModal(true)
-                                            setShowDeleted(false)
-                                        }}
-                                        className="h-16 md:h-24 w-full bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                                    >
-                                        Delete
-                                    </button>
-                                </>
-                            )}
-                        </div>
+                        {!(selectedMenu?.id === menu.id && showUpdateForm) && (
+                            <div className="space-y-2">
+                                <button
+                                    key={`update-action-${menu.id}`}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setSelectedMenu(menu)
+                                        setShowUpdateForm(true)
+                                        setFormData({
+                                            [`menus_url_${menu.id}`]: String(menu.menus_url),
+                                            [`menus_type_${menu.id}`]: menu.menus_type,
+                                            [`menus_text_${menu.id}`]: menu.menus_text
+                                        })
+                                    }}
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                >
+                                    Update
+                                </button>
+                                <button
+                                    key={`delete-action-${menu.id}`}
+                                    onClick={() => {
+                                        setSelectedMenu(menu)
+                                        setShowModal(true)
+                                        setShowDeleted(false)
+                                    }}
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        )}
                     </div>
                 )}
-            </div >
+            </div>
         ))
     }
 
     // Render the component
-    return (<>
-        {(user ? <div className="min-h-screen bg-white px-4 py-8 md:py-12">
-            <div className="max-w-7xl mx-auto">
+    return (
+        user ? (
+            <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
+                <div className="max-w-6xl mx-auto">
+                    <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-black">
+                            Menu Management
+                        </h1>
+
+                        <p className="text-sm sm:text-base text-gray-600 mb-6">
+                            To see menus, please click on the menu name.
+                        </p>
+
+                        {/* Add Menu Button */}
+                        <div className="mb-6">
+                            <button
+                                onClick={handleAddMenu}
+                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-6 rounded-xl text-sm sm:text-base transition-colors"
+                            >
+                                + Add New Menu
+                            </button>
+                        </div>
+
+                        {/* Menu List */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                            {menuMap()}
+                        </div>
+
+                        {/* Add Menu Form */}
+                        {addMenu && (
+                            <div key="add-menu-form" className="bg-black text-beige p-4 sm:p-6 rounded-xl mt-6">
+                                <h2 className="text-lg sm:text-xl font-bold mb-4">Add New Menu</h2>
+                                <div className="space-y-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-sm sm:text-base font-semibold text-beige">
+                                                Menu Name
+                                            </label>
+                                            <textarea
+                                                key="add-menu-textarea"
+                                                placeholder="Enter menu name"
+                                                onChange={handleChange}
+                                                name="menus_type"
+                                                value={formData.menus_type || ""}
+                                                className="border border-gray-300 rounded-lg p-3 h-20 text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm sm:text-base font-semibold text-beige">
+                                                PDF URL
+                                            </label>
+                                            <textarea
+                                                key="add-menu-textarea"
+                                                placeholder="To add a PDF, please click on the upload button"
+                                                onChange={handleChange}
+                                                name="menus_url"
+                                                value={formData.menus_url || ""}
+                                                className="border border-gray-300 rounded-lg p-3 h-20 bg-beige text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
+                                                disabled={true}
+                                            />
+                                        </div>
+                                    </div>
+                                    {!uploadButton && (
+                                        <div className="flex flex-col sm:flex-row gap-3">
+                                            <button
+                                                key="add-menu-upload-btn"
+                                                type="button"
+                                                className="flex-1 bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={(e) => handleUpload(e, "menus_url")}
+                                            >
+                                                Upload PDF
+                                            </button>
+                                            <button
+                                                key="add-menu-cancel-btn"
+                                                type="button"
+                                                className="flex-1 bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={() => {
+                                                    setAddMenu(false)
+                                                    setFormData({ menus_url: "", menus_type: "" })
+                                                    setUploadButton(false)
+                                                }}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    )}
+                                    {uploadButton && (
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                            <button
+                                                key="add-menu-edit-btn"
+                                                type="button"
+                                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={(e) => handleUpload(e, "menus_url")}
+                                            >
+                                                Edit PDF
+                                            </button>
+                                            <button
+                                                key="add-menu-save-btn"
+                                                type="button"
+                                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={(e) => {
+                                                    handlePost(e)
+                                                }}
+                                            >
+                                                Save
+                                            </button>
+                                            <button
+                                                key="add-menu-cancel-btn"
+                                                type="button"
+                                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={() => {
+                                                    setAddMenu(false)
+                                                    setFormData({ menus_url: "", menus_type: "" })
+                                                    setUploadButton(false)
+                                                }}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Navigation Buttons */}
+                        <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8 sm:mt-10">
+                            <a href="/dashboard" className="flex-1 sm:flex-none">
+                                <button className="w-full sm:w-auto bg-black hover:bg-gray-800 text-beige hover:text-beige border border-black hover:border-gray-800 font-bold py-3 px-6 rounded-lg text-sm sm:text-base transition-colors">
+                                    Return to Dashboard
+                                </button>
+                            </a>
+                            <a href="/EditMainPage" className="flex-1 sm:flex-none">
+                                <button className="w-full sm:w-auto bg-black hover:bg-gray-800 text-beige hover:text-beige border border-black hover:border-gray-800 font-bold py-3 px-6 rounded-lg text-sm sm:text-base transition-colors">
+                                    Return to Edit Page
+                                </button>
+                            </a>
+                        </div>
+
+                        {/* Success Message */}
+                        {showDeleted && selectedMenu && (
+                            <div className="flex justify-center items-center mt-6">
+                                <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 bg-beige px-4 py-3 rounded-xl">
+                                    <h1 className="text-center text-sm sm:text-base font-semibold text-black">
+                                        {selectedMenu.menus_text} menu has been deleted
+                                    </h1>
+                                    <button
+                                        onClick={dismissMessage}
+                                        className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-4 rounded-lg text-sm transition-colors"
+                                    >
+                                        Dismiss
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Modal */}
                 {showModal && selectedMenu && (
-                    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-                        {/* Modal content */}
-                        <div className="bg-beige p-6 md:p-8 rounded-2xl shadow-xl max-w-md w-full mx-4 text-center">
-                            <h2 className="text-lg md:text-xl font-bold mb-4 text-black">Confirm Deletion</h2>
-                            <p className="text-sm md:text-base text-gray-700 mb-6">
-                                Are you sure you want to delete {selectedMenu.menus_text} menu  ?
+                    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4">
+                        <div className="bg-beige p-6 sm:p-8 rounded-2xl shadow-xl max-w-sm sm:max-w-md w-full text-center">
+                            <h2 className="text-lg sm:text-xl font-bold mb-4 text-black">Confirm Deletion</h2>
+                            <p className="text-gray-700 mb-6 text-sm sm:text-base">
+                                Are you sure you want to delete {selectedMenu.menus_text} menu?
                             </p>
-                            <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-4">
-                                {/* Confirm delete button */}
+                            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                                 <button
                                     onClick={deleteMenus}
-                                    className="w-full md:w-auto bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-3 md:p-4 rounded-xl text-sm md:text-base"
+                                    className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 >
-                                    Confirm delete
+                                    Delete
                                 </button>
-                                {/* Cancel button */}
                                 <button
                                     onClick={() => {
                                         setShowModal(false)
                                         setSelectedMenu(null)
                                     }}
-                                    className="w-full md:w-auto bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-3 md:p-4 rounded-xl text-sm md:text-base"
+                                    className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 >
                                     Cancel
                                 </button>
@@ -426,145 +578,9 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                         </div>
                     </div>
                 )}
-                <div className="text-center mb-6 md:mb-8">
-                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-black mb-2 md:mb-4">Menus list</h1>
-                    <p className="text-sm md:text-base text-gray-700">
-                        To see menus, please click on the menu name.
-                    </p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-12 items-center rounded-xl md:rounded-3xl w-full font-bold text-black mb-4 p-3 md:p-4">
-                    <div className="col-span-1 md:col-span-2 text-sm md:text-base">Preview</div>
-                    <div className="col-span-1 md:col-span-8 text-center text-sm md:text-base">Name</div>
-                    <div className="col-span-1 md:col-span-2 flex justify-end">
-                        <button
-                            onClick={handleAddMenu}
-                            className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 md:py-4 px-3 md:px-6 rounded-xl text-sm md:text-base">
-                            <span>+</span>
-                        </button>
-                    </div>
-                </div>
-                <div className="space-y-3 md:space-y-4">
-                    {menuMap()}
-                </div>
-                {addMenu && (
-                    <div key="add-menu-form" className="bg-black my-2 p-3 md:p-4 rounded-xl font-bold text-black">
-                        <div className="space-y-3 md:space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                                <textarea
-                                    key="add-menu-textarea"
-                                    placeholder="Menu name"
-                                    onChange={handleChange}
-                                    name="menus_type"
-                                    value={formData.menus_type || ""}
-                                    className="border border-gray-300 rounded-xl p-2 h-20 md:h-24 text-sm md:text-base"
-                                />
-                                <textarea
-                                    key="add-menu-textarea"
-                                    placeholder="To add a PDF, please click on the add a menu button"
-                                    onChange={handleChange}
-                                    name="menus_url"
-                                    value={formData.menus_url || ""}
-                                    className="border border-gray-300 rounded-xl p-2 h-20 md:h-24 bg-beige text-sm md:text-base"
-                                    disabled={true}
-                                />
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3">
-                                {!uploadButton && (
-                                    <>
-                                        <button
-                                            key="add-menu-upload-btn"
-                                            type="button"
-                                            className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                                            onClick={(e) => handleUpload(e, "menus_url")}
-                                        >
-                                            Add a menu
-                                        </button>
-                                        <button
-                                            key="add-menu-cancel-btn"
-                                            type="button"
-                                            className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                                            onClick={() => {
-                                                setAddMenu(false)
-                                                setFormData({ menus_url: "", menus_type: "" })
-                                                setUploadButton(false)
-                                            }}
-                                        >
-                                            Cancel
-                                        </button>
-                                    </>
-                                )}
-                                {uploadButton && (
-                                    <>
-                                        <button
-                                            key="add-menu-edit-btn"
-                                            type="button"
-                                            className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                                            onClick={(e) => handleUpload(e, "menus_url")}
-                                        >
-                                            Edit URL
-                                        </button>
-                                        <button
-                                            key="add-menu-save-btn"
-                                            type="button"
-                                            className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                                            onClick={(e) => {
-                                                handlePost(e)
-                                            }}
-                                        >
-                                            Save
-                                        </button>
-                                        <button
-                                            key="add-menu-cancel-btn"
-                                            type="button"
-                                            className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                                            onClick={() => {
-                                                setAddMenu(false)
-                                                setFormData({ menus_url: "", menus_type: "" })
-                                                setUploadButton(false)
-                                            }}
-                                        >
-                                            Cancel
-                                        </button>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {/* Return buttons */}
-                <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-4 mt-8 md:mt-10">
-                    <a href="/dashboard">
-                        <button className="w-full md:w-auto bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-3 md:p-4 rounded-xl text-sm md:text-base">
-                            Return to dashboard
-                        </button>
-                    </a>
-                    <a href={`/EditMainPage`}>
-                        <button className="w-full md:w-auto bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-3 md:p-4 rounded-xl text-sm md:text-base">
-                            Return to edit page
-                        </button>
-                    </a>
-                </div>
-                {/* Deletion message */}
-                {showDeleted && selectedMenu && (
-                    <div className="flex flex-col md:flex-row justify-center items-center m-3 p-4 rounded-xl md:rounded-3xl w-full">
-                        <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4">
-                            <h1 className="text-center text-base md:text-lg font-semibold text-black bg-beige px-4 md:px-6 py-3 rounded-xl">
-                                The {selectedMenu.menus_text} menu has been deleted
-                            </h1>
-                            {/* Dismiss button */}
-                            <button
-                                onClick={dismissMessage}
-                                className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                            >
-                                Dismiss
-                            </button>
-                        </div>
-                    </div>
-                )}
             </div>
-        </div> :
+        ) : (
             <NotLogged />
-        )}
-    </>
-    )
+        )
+    );
 }

@@ -15,44 +15,87 @@ interface UserProps {
 
 export default function EditMainPage({ content, setContent, user, setUser }: ContentProps & UserProps) {
     console.log(user)
-    return  <>
-        {(user ? <div className="my-24 flex flex-col justify-center items-center">
-            <div>
-                <h1 className="text-3xl">Edit main page</h1>
+    return (
+        user ? (
+            <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
+                <div className="max-w-6xl mx-auto">
+                    <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-black text-center">
+                            Edit Main Page
+                        </h1>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                            <a
+                                href={`/updateCarousels/${content?.id}`}
+                                className="block bg-black text-beige hover:bg-beige hover:text-black border border-beige hover:border-black rounded-lg p-6 sm:p-8 transition-colors group"
+                            >
+                                <div className="flex flex-col items-center justify-center h-32 sm:h-40">
+                                    <h5 className="text-lg sm:text-xl md:text-2xl font-bold text-center">
+                                        Carousel
+                                    </h5>
+                                </div>
+                            </a>
+
+                            <a
+                                href={`/updateAbout/${content?.id}`}
+                                className="block bg-black text-beige hover:bg-beige hover:text-black border border-beige hover:border-black rounded-lg p-6 sm:p-8 transition-colors group"
+                            >
+                                <div className="flex flex-col items-center justify-center h-32 sm:h-40">
+                                    <h5 className="text-lg sm:text-xl md:text-2xl font-bold text-center">
+                                        About
+                                    </h5>
+                                </div>
+                            </a>
+
+                            <a
+                                href={`/updateMenus/${content?.id}`}
+                                className="block bg-black text-beige hover:bg-beige hover:text-black border border-beige hover:border-black rounded-lg p-6 sm:p-8 transition-colors group"
+                            >
+                                <div className="flex flex-col items-center justify-center h-32 sm:h-40">
+                                    <h5 className="text-lg sm:text-xl md:text-2xl font-bold text-center">
+                                        Menus
+                                    </h5>
+                                </div>
+                            </a>
+
+                            <a
+                                href={`/updateGrid/${content?.id}`}
+                                className="block bg-black text-beige hover:bg-beige hover:text-black border border-beige hover:border-black rounded-lg p-6 sm:p-8 transition-colors group"
+                            >
+                                <div className="flex flex-col items-center justify-center h-32 sm:h-40">
+                                    <h5 className="text-lg sm:text-xl md:text-2xl font-bold text-center">
+                                        Grid Gallery
+                                    </h5>
+                                </div>
+                            </a>
+
+                            <a
+                                href={`/updateReservation/${content?.id}`}
+                                className="block bg-black text-beige hover:bg-beige hover:text-black border border-beige hover:border-black rounded-lg p-6 sm:p-8 transition-colors group"
+                            >
+                                <div className="flex flex-col items-center justify-center h-32 sm:h-40">
+                                    <h5 className="text-lg sm:text-xl md:text-2xl font-bold text-center">
+                                        Reservation
+                                    </h5>
+                                </div>
+                            </a>
+
+                            <a
+                                href={`/updateContact/${content?.id}`}
+                                className="block bg-black text-beige hover:bg-beige hover:text-black border border-beige hover:border-black rounded-lg p-6 sm:p-8 transition-colors group"
+                            >
+                                <div className="flex flex-col items-center justify-center h-32 sm:h-40">
+                                    <h5 className="text-lg sm:text-xl md:text-2xl font-bold text-center">
+                                        Contact Us
+                                    </h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="m-10 grid grid-cols-2 gap-6 justify-center items-center md:grid-cols-4 xl:grid-cols-5">
-                <div>
-                    <a href={`/updateCarousels/${content?.id}`} className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
-                        <h5 className="text-2xl font-bold text-center">Carousel</h5>
-                    </a>
-                </div>
-                <div>
-                    <a href={`/updateAbout/${content?.id}`} className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
-                        <h5 className="text-2xl font-bold text-center">About</h5>
-                    </a>
-                </div>
-                <div>
-                    <a href={`/updateMenus/${content?.id}`} className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
-                        <h5 className="text-2xl font-bold text-center">Menus</h5>
-                    </a>
-                </div>
-                <div>
-                    <a href={`/updateGrid/${content?.id}`} className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
-                        <h5 className="text-2xl font-bold text-center">Grid Gallery</h5>
-                    </a>
-                </div>
-                <div>
-                    <a href={`/updateReservation/${content?.id}`} className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
-                        <h5 className="text-2xl font-bold text-center">Reservation</h5>
-                    </a>
-                </div>
-                <div>
-                    <a href={`/updateContact/${content?.id}`} className="h-48 flex justify-center items-center  max-w-sm p-6 bg-white border rounded-lg bg-black text-beige hover:bg-opacity-50">
-                        <h5 className="text-2xl font-bold text-center">Contact us section</h5>
-                    </a>
-                </div>
-            </div>
-        </div> : <NotLogged />
-    )}
-    </>
+        ) : (
+            <NotLogged />
+        )
+    );
 }

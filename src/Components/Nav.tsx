@@ -34,7 +34,7 @@ export default function Nav({ user, setUser }: UserProps) {
                             <XMarkIcon aria-hidden="true" className="hidden h-6 w-6 group-data-[open]:block" />
                         </DisclosureButton>
                     </div>
-                    <div className="mt-10 flex flex-1 items-center justify-center md:items-stretch md:justify-start">
+                    <div className="flex flex-1 items-center justify-center md:items-center md:justify-start">
                         <a href="/">
                             <div className="flex flex-shrink-0 items-center">
                                 <img
@@ -44,7 +44,7 @@ export default function Nav({ user, setUser }: UserProps) {
                                 />
                             </div>
                         </a>
-                        <div className="hidden md:ml-6 mt-3 md:block">
+                        <div className="hidden md:ml-6 md:block">
                             <div className="flex space-x-4">
                                 {navigation.map((item) => (
                                     <a
@@ -63,8 +63,8 @@ export default function Nav({ user, setUser }: UserProps) {
                         </div>
 
                     </div>
-                    <div className="hidden md:block mt-3 text-gray-900">
-                        {!user && (<div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
+                    <div className="text-gray-900">
+                        {!user && (<div className="hidden md:flex justify-center space-x-4 text-2xl font-bold">
                             <a target="_blank" href="https://www.facebook.com/" >
                                 <span className="[&>svg]:h-5 [&>svg]:w-5">
                                     <svg
@@ -108,7 +108,7 @@ export default function Nav({ user, setUser }: UserProps) {
 
                         </div>)}
                         {user && (
-                            <div className="mt-10 flex justify-center space-x-4 pb-4 pt-1 text-2xl font-bold">
+                            <div className="flex justify-center space-x-4 text-2xl font-bold">
                                 <a href="/dashboard">
                                     {!user.image ? (
                                         <figure className="w-10 ">

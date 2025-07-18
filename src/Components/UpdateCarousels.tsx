@@ -312,9 +312,9 @@ export default function UpdateCarousels({ setContent, content, carousels, setCar
         carousels?.map((carousel: ICarousels) => (
             <div
                 key={carousel.id}
-                className="bg-black text-beige my-2 p-2 md:p-4 rounded-xl"
+                className="bg-black text-beige p-3 sm:p-4 rounded-xl"
             >
-                <div className="grid grid-cols-12 gap-2 md:gap-4 items-center">
+                <div className="space-y-3">
                     <a
                         href={
                             selectedCarousel?.id === carousel.id && formData[`carousel_url_${carousel.id}`]
@@ -323,12 +323,12 @@ export default function UpdateCarousels({ setContent, content, carousels, setCar
                                     ? carousel.carousel_url.toString()
                                     : ''
                         }
-                        className="col-span-5"
+                        className="block"
                         target="_blank"
                     >
                         <figure className="w-full">
                             <img
-                                className="rounded-xl w-full h-20 md:h-32 object-cover"
+                                className="rounded-lg w-full h-32 sm:h-40 object-cover"
                                 src={
                                     selectedCarousel?.id === carousel.id && formData[`carousel_url_${carousel.id}`]
                                         ? formData[`carousel_url_${carousel.id}`].toString()
@@ -336,13 +336,15 @@ export default function UpdateCarousels({ setContent, content, carousels, setCar
                                             ? carousel.carousel_url.toString()
                                             : ''
                                 }
-                                alt="Placeholder image"
+                                alt="Carousel image"
                             />
                         </figure>
                     </a>
-                    <div className="col-span-5 text-center text-sm md:text-base">{carousel.id}</div>
+                    <div className="text-center text-sm sm:text-base font-medium">
+                        ID: {carousel.id}
+                    </div>
                     {!(selectedCarousel?.id === carousel.id && uploadButton) && (
-                        <div className="col-span-2 grid grid-cols-1 gap-2">
+                        <div className="space-y-2">
                             <button
                                 onClick={(e) => {
                                     handleUpload(e, `carousel_url_${carousel.id}`)
@@ -352,7 +354,7 @@ export default function UpdateCarousels({ setContent, content, carousels, setCar
                                         [`carousel_url_${carousel.id}`]: String(carousel.carousel_url)
                                     })
                                 }}
-                                className="h-16 md:h-28 w-full bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-1 md:py-2 px-2 md:px-4 rounded-xl text-xs md:text-sm"
+                                className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                             >
                                 Update
                             </button>
@@ -361,24 +363,24 @@ export default function UpdateCarousels({ setContent, content, carousels, setCar
                                     setSelectedCarousel(carousel)
                                     setShowModal(true)
                                 }}
-                                className="h-16 md:h-28 w-full bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-1 md:py-2 px-2 md:px-4 rounded-xl text-xs md:text-sm"
+                                className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                             >
                                 Delete
                             </button>
                         </div>
                     )}
                     {selectedCarousel?.id === carousel.id && uploadButton && (
-                        <div className="col-span-2 grid grid-cols-1 gap-2">
+                        <div className="space-y-2">
                             <button
                                 type="button"
-                                className="h-8 md:h-10 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-1 md:py-2 px-2 md:px-4 rounded-xl text-xs md:text-sm"
+                                className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 onClick={(e) => handleUpload(e, "carousel_url")}
                             >
                                 Edit
                             </button>
                             <button
                                 type="button"
-                                className="h-8 md:h-10 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-1 md:py-2 px-2 md:px-4 rounded-xl text-xs md:text-sm"
+                                className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 onClick={(e) => {
                                     handlePut(e)
                                     setAddCarousel(false)
@@ -389,7 +391,7 @@ export default function UpdateCarousels({ setContent, content, carousels, setCar
                             </button>
                             <button
                                 type="button"
-                                className="h-8 md:h-10 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-1 md:py-2 px-2 md:px-4 rounded-xl text-xs md:text-sm"
+                                className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 onClick={() => {
                                     if (selectedCarousel) {
                                         setCarousels(prev => prev.map(carousel =>
@@ -427,160 +429,177 @@ export default function UpdateCarousels({ setContent, content, carousels, setCar
 
     // Render the component
     return (
-        (user ? <div className="flex flex-col bg-white px-4 py-8">
-            {showModal && selectedCarousel && (
-                <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-                    <div className="bg-beige p-8 rounded-2xl shadow-xl max-w-md w-full text-center">
-                        <h2 className="text-xl font-bold mb-4 text-black">Confirm Deletion</h2>
-                        <p className="text-gray-700 mb-6">
-                            Are you sure you want to delete{" "}
-                            <strong>
-                                {selectedCarousel.id}
-                            </strong>
-                            ?
-                        </p>
-                        <div className="flex justify-center gap-4">
+        user ? (
+            <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
+                <div className="max-w-6xl mx-auto">
+                    <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-black">
+                            Carousel Management
+                        </h1>
+
+                        {/* Add Carousel Button */}
+                        <div className="mb-6">
                             <button
-                                onClick={() => {
-                                    deleteCarousel()
-                                    setShowModal(false)
-                                    setShowDeleted(false)
-                                }}
-                                className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-4 mr-2 rounded-xl"
+                                onClick={handleAddCarousel}
+                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-6 rounded-xl text-sm sm:text-base transition-colors"
                             >
-                                Delete
-                            </button>
-                            <button
-                                onClick={() => setShowModal(false)}
-                                className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-4 mr-2 rounded-xl"
-                            >
-                                Cancel
+                                + Add New Carousel
                             </button>
                         </div>
-                    </div>
-                </div>
-            )}
-            <h1 className="text-xl md:text-2xl font-bold mb-4 text-black">Carousels list</h1>
-            <div className="grid grid-cols-12 gap-2 md:gap-4 items-center rounded-xl md:rounded-3xl mb-4 font-bold text-black">
-                <div className="col-span-5 text-center text-sm md:text-base">Preview</div>
-                <div className="col-span-5 text-center text-sm md:text-base">ID</div>
-                <div className="col-span-2 flex justify-end">
-                    <button
-                        onClick={handleAddCarousel}
-                        className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-3 md:py-4 md:px-6 rounded-xl text-sm md:text-base">
-                        <span>+</span>
-                    </button>
-                </div>
-            </div>
-            {carouselMap()}
-            {addCarousel && (
-                <div key="add-carousel-form" className="bg-black my-2 p-2 md:p-4 rounded-xl font-bold text-black">
-                    <div className="grid grid-cols-12 gap-2 md:gap-4">
-                        {!uploadButton && (
-                            <>
-                                <button
-                                    key="add-carousel-upload-btn"
-                                    type="button"
-                                    className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-6 text-sm md:text-base"
-                                    onClick={(e) => handleUpload(e, "carousel_url")}
-                                >
-                                    add an image
+
+                        {/* Carousel List */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                            {carouselMap()}
+                        </div>
+
+                        {/* Add Carousel Form */}
+                        {addCarousel && (
+                            <div key="add-carousel-form" className="bg-black text-beige p-4 sm:p-6 rounded-xl mt-6">
+                                <h2 className="text-lg sm:text-xl font-bold mb-4">Add New Carousel</h2>
+                                <div className="space-y-4">
+                                    {!uploadButton && (
+                                        <div className="flex flex-col sm:flex-row gap-3">
+                                            <button
+                                                key="add-carousel-upload-btn"
+                                                type="button"
+                                                className="flex-1 bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={(e) => handleUpload(e, "carousel_url")}
+                                            >
+                                                Upload Image
+                                            </button>
+                                            <button
+                                                key="add-carousel-cancel-btn"
+                                                type="button"
+                                                className="flex-1 bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={() => {
+                                                    setAddCarousel(false)
+                                                    setFormData({ carousel_url: "" })
+                                                    setUploadButton(false)
+                                                }}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                                {uploadButton && (
+                                    <div className="space-y-4">
+                                        <div className="space-y-3">
+                                            <a href={formData.carousel_url ? formData.carousel_url.toString() : ''} className="block" target="_blank">
+                                                <figure key={`figure-${formData.carousel_url}`} className="w-full">
+                                                    <img
+                                                        className="rounded-lg w-full h-48 sm:h-64 object-cover"
+                                                        src={formData.carousel_url ? formData.carousel_url.toString() : ''}
+                                                        alt="Preview image"
+                                                    />
+                                                </figure>
+                                            </a>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                            <button
+                                                key="add-carousel-edit-btn"
+                                                type="button"
+                                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={(e) => handleUpload(e, "carousel_url")}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                key="add-carousel-save-btn"
+                                                type="button"
+                                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={(e) => {
+                                                    handlePost(e)
+                                                }}
+                                            >
+                                                Save
+                                            </button>
+                                            <button
+                                                key="add-carousel-cancel-btn"
+                                                type="button"
+                                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                                onClick={() => {
+                                                    setAddCarousel(false)
+                                                    setFormData({ carousel_url: "" })
+                                                    setUploadButton(false)
+                                                }}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Navigation Buttons */}
+                        <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8 sm:mt-10">
+                            <a href="/dashboard" className="flex-1 sm:flex-none">
+                                <button className="w-full sm:w-auto bg-black hover:bg-gray-800 text-beige hover:text-beige border border-black hover:border-gray-800 font-bold py-3 px-6 rounded-lg text-sm sm:text-base transition-colors">
+                                    Return to Dashboard
                                 </button>
-                                <button
-                                    key="add-carousel-cancel-btn"
-                                    type="button"
-                                    className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-6 text-sm md:text-base"
-                                    onClick={() => {
-                                        setAddCarousel(false)
-                                        setFormData({ carousel_url: "" })
-                                        setUploadButton(false)
-                                    }}
-                                >
-                                    Cancel
+                            </a>
+                            <a href="/EditMainPage" className="flex-1 sm:flex-none">
+                                <button className="w-full sm:w-auto bg-black hover:bg-gray-800 text-beige hover:text-beige border border-black hover:border-gray-800 font-bold py-3 px-6 rounded-lg text-sm sm:text-base transition-colors">
+                                    Return to Edit Page
                                 </button>
-                            </>
+                            </a>
+                        </div>
+
+                        {/* Success Message */}
+                        {showDeleted && selectedCarousel && (
+                            <div className="flex justify-center items-center mt-6">
+                                <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 bg-beige px-4 py-3 rounded-xl">
+                                    <h1 className="text-center text-sm sm:text-base font-semibold text-black">
+                                        Carousel {selectedCarousel.id} has been deleted
+                                    </h1>
+                                    <button
+                                        onClick={dismissMessage}
+                                        className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-4 rounded-lg text-sm transition-colors"
+                                    >
+                                        Dismiss
+                                    </button>
+                                </div>
+                            </div>
                         )}
                     </div>
-                    {uploadButton && (
-                        <>
-                            <div className="grid grid-cols-12 gap-2 md:gap-4 justify-center items-center">
-                                <a href={formData.carousel_url ? formData.carousel_url.toString() : ''} className="col-span-12" target="_blank">
-                                    <figure key={`figure-${formData.carousel_url}`} className="w-full">
-                                        <img
-                                            className="rounded-xl h-full w-full object-cover"
-                                            src={formData.carousel_url ? formData.carousel_url.toString() : ''}
-                                            alt="Placeholder image"
-                                        />
-                                    </figure>
-                                </a>
-                            </div>
-                            <div className="grid grid-cols-12 gap-2 md:gap-4 justify-center items-center mt-4">
+                </div>
+
+                {/* Modal */}
+                {showModal && selectedCarousel && (
+                    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4">
+                        <div className="bg-beige p-6 sm:p-8 rounded-2xl shadow-xl max-w-sm sm:max-w-md w-full text-center">
+                            <h2 className="text-lg sm:text-xl font-bold mb-4 text-black">Confirm Deletion</h2>
+                            <p className="text-gray-700 mb-6 text-sm sm:text-base">
+                                Are you sure you want to delete{" "}
+                                <strong>
+                                    {selectedCarousel.id}
+                                </strong>
+                                ?
+                            </p>
+                            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                                 <button
-                                    key="add-carousel-edit-btn"
-                                    type="button"
-                                    className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-4 text-sm md:text-base"
-                                    onClick={(e) => handleUpload(e, "carousel_url")}
-                                >
-                                    Edit URL
-                                </button>
-                                <button
-                                    key="add-carousel-save-btn"
-                                    type="button"
-                                    className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-4 text-sm md:text-base"
-                                    onClick={(e) => {
-                                        handlePost(e)
-                                    }}
-                                >
-                                    Save
-                                </button>
-                                <button
-                                    key="add-carousel-cancel-btn"
-                                    type="button"
-                                    className="h-10 md:h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-4 text-sm md:text-base"
                                     onClick={() => {
-                                        setAddCarousel(false)
-                                        setFormData({ carousel_url: "" })
-                                        setUploadButton(false)
+                                        deleteCarousel()
+                                        setShowModal(false)
+                                        setShowDeleted(false)
                                     }}
+                                    className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                >
+                                    Delete
+                                </button>
+                                <button
+                                    onClick={() => setShowModal(false)}
+                                    className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 >
                                     Cancel
                                 </button>
                             </div>
-                        </>
-                    )}
-                </div>
-            )}
-            {/* Return buttons */}
-            <div className="flex flex-col md:flex-row justify-center gap-4 mt-8">
-                <a href="/dashboard">
-                    <button className="w-full md:w-auto bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-3 md:p-4 rounded-xl text-sm md:text-base">
-                        Return to dashboard
-                    </button>
-                </a>
-                <a href="/EditMainPage">
-                    <button className="w-full md:w-auto bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-3 md:p-4 rounded-xl text-sm md:text-base">
-                        Return to edit page
-                    </button>
-                </a>
-            </div>
-            {/* Deletion message */}
-            {showDeleted && selectedCarousel && (
-                <div className="flex justify-center items-center m-3 p-4 rounded-xl md:rounded-3xl w-full">
-                    <div className="flex flex-col md:flex-row items-center gap-4">
-                        <h1 className="text-center text-base md:text-lg font-semibold text-black bg-beige px-4 md:px-6 py-3 rounded-xl">
-                            The carousel number {selectedCarousel.id} has been deleted
-                        </h1>
-                        {/* Dismiss button */}
-                        <button
-                            onClick={dismissMessage}
-                            className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl text-sm md:text-base"
-                        >
-                            Dismiss
-                        </button>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div> :
+                )}
+            </div>
+        ) : (
             <NotLogged />
         )
     );
