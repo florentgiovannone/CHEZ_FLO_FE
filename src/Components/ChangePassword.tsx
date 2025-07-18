@@ -94,7 +94,7 @@ export default function ChangePassword() {
     };
 
     return (
-        <div className="section flex justify-center  bg-gray-50 px-4 py-5 mt-10 mb-96">
+        <div className="section flex justify-center bg-gray-50 px-4 py-5 mt-10">
             <div className="container w-full ">
                 <h1 className="text-3xl">Change Your Password</h1>
 
@@ -156,16 +156,16 @@ export default function ChangePassword() {
                 >
                     Change Password
                 </button>
-                            {passwordChanged && (
-                <div className="mt-6 text-center">
-                    <button
-                        onClick={() => navigate("/dashboard")}
-                        className="mt-4 bg-black text-beige hover:bg-beige hover:text-black border border-black px-6 py-2 rounded-xl font-bold"
-                    >
-                        Go to Dashboard
-                    </button>
-                </div>
-            )}
+                {passwordChanged && (
+                    <div className="mt-6 text-center">
+                        <button
+                            onClick={() => navigate("/dashboard")}
+                            className="mt-4 bg-black text-beige hover:bg-beige hover:text-black border border-black px-6 py-2 rounded-xl font-bold"
+                        >
+                            Go to Dashboard
+                        </button>
+                    </div>
+                )}
             </div>
 
 

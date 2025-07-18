@@ -33,11 +33,6 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
     const [uploadButton, setUploadButton] = useState(false)
     const { contentId } = useParams()
 
-    // Add this useEffect to debug selectedGrid changes
-    useEffect(() => {
-        console.log("selectedGrid updated:", selectedGrid)
-    }, [selectedGrid])
-
     useEffect(() => {
         async function fetchGrid() {
             try {
@@ -97,15 +92,6 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
         setSelectedGrid(null)
     }
 
-    // Scroll to the bottom of the page when adding a new carousel
-    const handleAddGrid = () => {
-        window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: 'smooth',
-        });
-        setAddGrid(true)
-    }
-
     // Handle the upload of a new carousel
     function handleUpload(e: SyntheticEvent, field: string, grid?: IGrid) {
         e.preventDefault();
@@ -153,7 +139,6 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
 
                 if (result && result.event === "success") {
                     console.log("Upload result:", result);
-
                     console.log("Result info:", result.info);
 
                     try {
@@ -222,7 +207,6 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
                     }
                 } else {
                     console.log("Upload result event:", result?.event);
-                    console.log(grid)
                 }
             }
         );
@@ -321,13 +305,13 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
 
     // Map the carousels to the carousel list
     const carouselMap = () => (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {grid?.map((grid: IGrid) => (
                 <div
                     key={grid.id}
-                    className="bg-black text-beige grid grid-flow-col my-2 p-2 items-center rounded-xl"
+                    className="bg-black text-beige p-3 sm:p-4 rounded-xl"
                 >
-                    <div key={`form-${grid.id}`} className="col-span-12 grid grid-cols-12 gap-2 items-center">
+                    <div key={`form-${grid.id}`} className="space-y-3">
                         <a
                             href={
                                 selectedGrid?.id === grid.id && formData[`grid_url_${grid.id}`]
@@ -336,12 +320,12 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
                                         ? grid.grid_url.toString()
                                         : ''
                             }
-                            className="col-span-5"
+                            className="block"
                             target="_blank"
                         >
                             <figure key={`figure-${grid.id}`} className="w-full">
                                 <img
-                                    className="rounded-xl h-full w-40 object-cover"
+                                    className="rounded-lg w-full h-32 sm:h-40 object-cover"
                                     src={
                                         selectedGrid?.id === grid.id && formData[`grid_url_${grid.id}`]
                                             ? formData[`grid_url_${grid.id}`].toString()
@@ -349,14 +333,15 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
                                                 ? grid.grid_url.toString()
                                                 : ''
                                     }
-                                    alt="Placeholder image"
+                                    alt="Grid image"
                                 />
                             </figure>
                         </a>
-                        <div key={`id-${grid.id}`} className="col-span-5 text-center">{grid.id}</div>
+                        <div key={`id-${grid.id}`} className="text-center text-sm sm:text-base font-medium">
+                            ID: {grid.id}
+                        </div>
                         {!(selectedGrid?.id === grid.id && uploadButton) && (
-                            // pre widget buttons
-                            <div key={`actions-${grid.id}`} className="col-span-2 grid grid-cols-1 gap-2">
+                            <div key={`actions-${grid.id}`} className="space-y-2">
                                 <button
                                     key={`update-action-${grid.id}`}
                                     onClick={(e) => {
@@ -367,72 +352,69 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
                                             [`grid_url_${grid.id}`]: String(grid.grid_url)
                                         })
                                     }}
-                                    className="h-28 w-full bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl"
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
                                 >
                                     Update
                                 </button>
                             </div>
                         )}
                         {selectedGrid?.id === grid.id && uploadButton && (
-                            // post widget buttons
-                            <div key={`buttons-${grid.id}`} className="col-span-2 grid grid-cols-1 gap-2">
-                                <>
-                                    <button
-                                        key="add-carousel-edit-btn"
-                                        type="button"
-                                        className="h-10 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-2"
-                                        onClick={(e) => handleUpload(e, "grid_url", grid)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        key="add-carousel-save-btn"
-                                        type="button"
-                                        className="h-10 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-2"
-                                        onClick={(e) => {
-                                            handlePut(e)
-                                            setAddGrid(false)
-                                            setUploadButton(false)
-                                        }}
-                                    >
-                                        Save
-                                    </button>
-                                    <button
-                                        key="add-carousel-cancel-btn"
-                                        type="button"
-                                        className="h-10 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-2"
-                                        onClick={() => {
-                                            if (selectedGrid) {
-                                                // Reset the grid back to its original state
-                                                setGrid(prev => prev.map(grid =>
-                                                    grid.id === selectedGrid.id
-                                                        ? selectedGrid
-                                                        : grid
-                                                ));
-                                                // Also update content state if it exists
-                                                if (content) {
-                                                    setContent(prev => {
-                                                        if (!prev) return null;
-                                                        return {
-                                                            ...prev,
-                                                            grid: prev.grid.map(grid =>
-                                                                grid.id === selectedGrid.id
-                                                                    ? selectedGrid
-                                                                    : grid
-                                                            )
-                                                        };
-                                                    });
-                                                }
+                            <div key={`buttons-${grid.id}`} className="space-y-2">
+                                <button
+                                    key="add-carousel-edit-btn"
+                                    type="button"
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                    onClick={(e) => handleUpload(e, "grid_url", grid)}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    key="add-carousel-save-btn"
+                                    type="button"
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                    onClick={(e) => {
+                                        handlePut(e)
+                                        setAddGrid(false)
+                                        setUploadButton(false)
+                                    }}
+                                >
+                                    Save
+                                </button>
+                                <button
+                                    key="add-carousel-cancel-btn"
+                                    type="button"
+                                    className="w-full bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-3 sm:py-3 sm:px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                    onClick={() => {
+                                        if (selectedGrid) {
+                                            // Reset the grid back to its original state
+                                            setGrid(prev => prev.map(grid =>
+                                                grid.id === selectedGrid.id
+                                                    ? selectedGrid
+                                                    : grid
+                                            ));
+                                            // Also update content state if it exists
+                                            if (content) {
+                                                setContent(prev => {
+                                                    if (!prev) return null;
+                                                    return {
+                                                        ...prev,
+                                                        grid: prev.grid.map(grid =>
+                                                            grid.id === selectedGrid.id
+                                                                ? selectedGrid
+                                                                : grid
+                                                        )
+                                                    };
+                                                });
                                             }
-                                            setAddGrid(false)
-                                            setUploadButton(false)
-                                            setSelectedGrid(null)
-                                            setFormData({})
-                                        }}
-                                    >
-                                        Cancel
-                                    </button>
-                                </>
+                                        }
+                                        setAddGrid(false)
+                                        setUploadButton(false)
+                                        setSelectedGrid(null)
+                                        setFormData({})
+                                    }}
+                                >
+                                    Cancel
+                                </button>
                             </div>
                         )}
                     </div>
@@ -443,32 +425,32 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
 
     // Render the component
     return (
-        (user ? <div className="flex flex-col bg-white m-36">
+        (user ? <div className="min-h-screen bg-white p-4 sm:p-6 md:p-8 lg:p-12">
             {showModal && selectedGrid && (
-                <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-                    <div className="bg-beige p-8 rounded-2xl shadow-xl max-w-md w-full text-center">
-                        <h2 className="text-xl font-bold mb-4 text-black">Confirm Deletion</h2>
-                        <p className="text-gray-700 mb-6">
+                <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4">
+                    <div className="bg-beige p-6 sm:p-8 rounded-2xl shadow-xl max-w-sm sm:max-w-md w-full text-center">
+                        <h2 className="text-lg sm:text-xl font-bold mb-4 text-black">Confirm Deletion</h2>
+                        <p className="text-gray-700 mb-6 text-sm sm:text-base">
                             Are you sure you want to delete{" "}
                             <strong>
                                 {selectedGrid.id}
                             </strong>
                             ?
                         </p>
-                        <div className="flex justify-center gap-4">
+                        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                             <button
                                 onClick={() => {
                                     deleteGrid()
                                     setShowModal(false)
                                     setShowDeleted(false)
                                 }}
-                                className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-4 mr-2 rounded-xl"
+                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-xl text-sm sm:text-base transition-colors"
                             >
                                 Delete
                             </button>
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-4 mr-2 rounded-xl"
+                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-xl text-sm sm:text-base transition-colors"
                             >
                                 Cancel
                             </button>
@@ -476,139 +458,124 @@ export default function UpdateGrid({ setContent, content, grid, setGrid, user }:
                     </div>
                 </div>
             )}
-            <h1 className="text-2xl font-bold mb-4 text-black">Grid list</h1>
-            <div className="flex">   
-            <div className="grid grid-flow-col grid-cols-12 items-center rounded-3xl md:w-full font-bold text-black">
-                <div className="col-span-5 pl-14">Preview</div>
-                <div className="col-span-5 text-center">ID</div>
-                {/* <div className="inline-flex justify-end col-span-4">
-                    <button
-                        onClick={handleAddGrid}
-                        className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-4 px-6 mx-2 rounded-xl">
-                        <span>+</span>
-                    </button>
-                </div> */}
-            </div>
-            <div className="grid grid-flow-col grid-cols-12 items-center rounded-3xl md:w-full font-bold text-black">
-                <div className="col-span-5 pl-14">Preview</div>
-                <div className="col-span-5 text-center">ID</div>
-                {/* <div className="inline-flex justify-end col-span-4">
-                    <button
-                        onClick={handleAddGrid}
-                        className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-4 px-6 mx-2 rounded-xl">
-                        <span>+</span>
-                    </button>
-                </div> */}
-            </div>
-            </div>
-            {carouselMap()}
-            {addGrid && (
-                <div key="add-carousel-form" className="bg-black grid-flow-row my-2 p-2 grid grid-cols-12 gap-4 items-center rounded-xl md:w-full font-bold text-black">
-                    <div className="col-span-12 grid grid-cols-12 gap-2">
-                        {!uploadButton && (
-                            <>
-                                <button
-                                    key="add-carousel-upload-btn"
-                                    type="button"
-                                    className="h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-6"
-                                    onClick={(e) => handleUpload(e, "grid_url")}
-                                >
-                                    add an image
-                                </button>
-                                <button
-                                    key="add-carousel-cancel-btn"
-                                    type="button"
-                                    className="h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-6"
-                                    onClick={() => {
-                                        setAddGrid(false)
-                                        setFormData({ grid_url: "" })
-                                        setUploadButton(false)
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-                            </>
+
+            <div className="max-w-6xl mx-auto">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-black">Grid Management</h1>
+
+                {/* Grid Items */}
+                {carouselMap()}
+
+                {/* Add Grid Form */}
+                {addGrid && (
+                    <div key="add-carousel-form" className="bg-black text-beige p-4 sm:p-6 rounded-xl mt-6">
+                        <h2 className="text-lg sm:text-xl font-bold mb-4">Add New Grid Item</h2>
+                        <div className="space-y-4">
+                            {!uploadButton && (
+                                <div className="flex flex-col sm:flex-row gap-3">
+                                    <button
+                                        key="add-carousel-upload-btn"
+                                        type="button"
+                                        className="flex-1 bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                        onClick={(e) => handleUpload(e, "grid_url")}
+                                    >
+                                        Upload Image
+                                    </button>
+                                    <button
+                                        key="add-carousel-cancel-btn"
+                                        type="button"
+                                        className="flex-1 bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                        onClick={() => {
+                                            setAddGrid(false)
+                                            setFormData({ grid_url: "" })
+                                            setUploadButton(false)
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                        {uploadButton && (
+                            <div className="space-y-4">
+                                <div className="space-y-3">
+                                    <a href={formData.grid_url ? formData.grid_url.toString() : ''} className="block" target="_blank">
+                                        <figure key={`figure-${formData.grid_url}`} className="w-full">
+                                            <img
+                                                className="rounded-lg w-full h-48 sm:h-64 object-cover"
+                                                src={formData.grid_url ? formData.grid_url.toString() : ''}
+                                                alt="Preview image"
+                                            />
+                                        </figure>
+                                    </a>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <button
+                                        key="add-carousel-edit-btn"
+                                        type="button"
+                                        className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                        onClick={(e) => handleUpload(e, "grid_url")}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        key="add-carousel-save-btn"
+                                        type="button"
+                                        className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                        onClick={(e) => {
+                                            handlePost(e)
+                                        }}
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        key="add-carousel-cancel-btn"
+                                        type="button"
+                                        className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-4 rounded-lg text-sm sm:text-base transition-colors"
+                                        onClick={() => {
+                                            setAddGrid(false)
+                                            setFormData({ grid_url: "" })
+                                            setUploadButton(false)
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
                         )}
                     </div>
-                    {uploadButton && (
-                        <>
-                            <div className="col-span-12 grid grid-cols-12 justify-center items-center">
-                                <a href={formData.grid_url ? formData.grid_url.toString() : ''} className="col-span-12" target="_blank">
-                                    <figure key={`figure-${formData.grid_url}`} className="w-full">
-                                        <img
-                                            className="rounded-xl h-full w-full object-cover"
-                                            src={formData.grid_url ? formData.grid_url.toString() : ''}
-                                            alt="Placeholder image"
-                                        /> x
-                                    </figure>
-                                </a>
-                            </div>
-                            <div className="col-span-12 grid grid-cols-12 justify-center items-center gap-2">
-                                <button
-                                    key="add-carousel-edit-btn"
-                                    type="button"
-                                    className="h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-4"
-                                    onClick={(e) => handleUpload(e, "grid_url")}
-                                >
-                                    Edit URL
-                                </button>
-                                <button
-                                    key="add-carousel-save-btn"
-                                    type="button"
-                                    className="h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-4"
-                                    onClick={(e) => {
-                                        handlePost(e)
-                                    }}
-                                >
-                                    Save
-                                </button>
-                                <button
-                                    key="add-carousel-cancel-btn"
-                                    type="button"
-                                    className="h-12 bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl col-span-4"
-                                    onClick={() => {
-                                        setAddGrid(false)
-                                        setFormData({ grid_url: "" })
-                                        setUploadButton(false)
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </>
-                    )}
-                </div>
-            )}
-            {/* Return buttons */}
-            <div className="flex justify-center mt-10">
-                <a href="/dashboard">
-                    <button className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-4 mr-2 rounded-xl">
-                        Return to dashboard
-                    </button>
-                </a>
-                <a href={`/EditMainPage`}>
-                    <button className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold p-4 mr-2 rounded-xl">
-                        Return to edit page
-                    </button>
-                </a>
-            </div>
-            {/* Deletion message */}
-            {showDeleted && selectedGrid && (
-                <div className="flex justify-center items-center m-3 p-4 rounded-3xl w-full">
-                    <div className="flex items-center gap-4">
-                        <h1 className="text-center text-lg font-semibold text-black bg-beige px-6 py-3 rounded-xl">
-                            The grid number {selectedGrid.id} has been deleted
-                        </h1>
-                        {/* Dismiss button */}
-                        <button
-                            onClick={dismissMessage}
-                            className="bg-black hover:bg-beige text-beige hover:text-black border border-b-beige hover:border-black font-bold py-2 px-4 rounded-xl"
-                        >
-                            Dismiss
+                )}
+
+                {/* Navigation Buttons */}
+                <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8 sm:mt-10">
+                    <a href="/dashboard" className="flex-1 sm:flex-none">
+                        <button className="w-full sm:w-auto bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-6 rounded-xl text-sm sm:text-base transition-colors">
+                            Return to Dashboard
                         </button>
-                    </div>
+                    </a>
+                    <a href={`/EditMainPage`} className="flex-1 sm:flex-none">
+                        <button className="w-full sm:w-auto bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-3 px-6 rounded-xl text-sm sm:text-base transition-colors">
+                            Return to Edit Page
+                        </button>
+                    </a>
                 </div>
-            )}
+
+                {/* Success Message */}
+                {showDeleted && selectedGrid && (
+                    <div className="flex justify-center items-center mt-6">
+                        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 bg-beige px-4 py-3 rounded-xl">
+                            <h1 className="text-center text-sm sm:text-base font-semibold text-black">
+                                Grid item {selectedGrid.id} has been deleted
+                            </h1>
+                            <button
+                                onClick={dismissMessage}
+                                className="bg-black hover:bg-beige text-beige hover:text-black border border-beige hover:border-black font-bold py-2 px-4 rounded-lg text-sm transition-colors"
+                            >
+                                Dismiss
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div> :
             <NotLogged />
         )

@@ -1,1 +1,1 @@
-export const baseUrl = import.meta.env.VITE_APP_URL
+export const baseUrl = ' https://project-chezflo-e38375f2f097.herokuapp.com/api';

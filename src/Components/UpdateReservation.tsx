@@ -84,15 +84,15 @@ export default function UpdateReservation({ content, setContent, user, setUser }
 
 
     return <>
-        {(user ? <div className="my-10 section flex items-center justify-center min-h-screen bg-gray-50 px-4">
-            <div className="container w-full ">
-                <h1 className="text-2xl">Update Reservation section</h1>
-                <p>Please note that only the text content will be edited, and no changes will be made to the line structure, such as adding or removing line breaks</p>
-                <form>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Title</h1>
+        {(user ? <div className="min-h-screen bg-gray-50 px-4 py-8 md:py-12">
+            <div className="max-w-4xl mx-auto">
+                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-black mb-4 md:mb-6">Update Reservation section</h1>
+                <p className="text-sm md:text-base text-gray-700 mb-6 md:mb-8">Please note that only the text content will be edited, and no changes will be made to the line structure, such as adding or removing line breaks</p>
+                <form className="space-y-4 md:space-y-6">
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Title</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="reservation_title"
                             type="text"
                             name="reservation_title"
@@ -100,20 +100,20 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.reservation_title}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Text</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Text</h2>
                         <input
-                            className="w-full  p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="reservation_text"
                             name="reservation_text"
                             onChange={handleChange}
                             value={formData.reservation_text}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Post booking text line one</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Post booking text line one</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="reservation_line_one"
                             type="text"
                             name="reservation_line_one"
@@ -121,10 +121,10 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.reservation_line_one}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Post booking text line two</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Post booking text line two</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="reservation_line_two"
                             type="text"
                             name="reservation_line_two"
@@ -132,43 +132,43 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.reservation_line_two}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Breakfast timing day one</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Breakfast timing day one</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="breakfast_timing_day_one"
                             type="text"
                             name="breakfast_timing_day_one"
                             onChange={handleChange}
                             value={formData.breakfast_timing_day_one}
                         />
-                    </div>  
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Breakfast timing hours one</h1>
+                    </div>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Breakfast timing hours one</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
-                            placeholder="breakfast_timing_hours_one"    
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
+                            placeholder="breakfast_timing_hours_one"
                             type="text"
                             name="breakfast_timing_hours_one"
                             onChange={handleChange}
                             value={formData.breakfast_timing_hours_one}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Breakfast timing day two</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Breakfast timing day two</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="breakfast_timing_day_two"
                             type="text"
                             name="breakfast_timing_day_two"
                             onChange={handleChange}
                             value={formData.breakfast_timing_day_two}
                         />
-                    </div>      
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Breakfast timing hours two</h1>
+                    </div>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Breakfast timing hours two</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="breakfast_timing_hours_two"
                             type="text"
                             name="breakfast_timing_hours_two"
@@ -176,10 +176,10 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.breakfast_timing_hours_two}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Lunch timing day one</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Lunch timing day one</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="lunch_timing_day_one"
                             type="text"
                             name="lunch_timing_day_one"
@@ -187,10 +187,10 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.lunch_timing_day_one}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Lunch timing hours one</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Lunch timing hours one</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="lunch_timing_hours_one"
                             type="text"
                             name="lunch_timing_hours_one"
@@ -198,10 +198,10 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.lunch_timing_hours_one}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Lunch timing day two</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Lunch timing day two</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="lunch_timing_day_two"
                             type="text"
                             name="lunch_timing_day_two"
@@ -209,10 +209,10 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.lunch_timing_day_two}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Lunch timing hours two</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Lunch timing hours two</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="lunch_timing_hours_two"
                             type="text"
                             name="lunch_timing_hours_two"
@@ -220,21 +220,21 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.dinner_timing_hours_one}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Dinner timing day two</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Dinner timing day two</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="dinner_timing_day_two"
                             type="text"
                             name="dinner_timing_day_two"
                             onChange={handleChange}
                             value={formData.dinner_timing_day_two}
                         />
-                    </div>  
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Dinner timing hours two</h1>
+                    </div>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Dinner timing hours two</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="dinner_timing_hours_two"
                             type="text"
                             name="dinner_timing_hours_two"
@@ -242,10 +242,10 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.dinner_timing_hours_two}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Post booking button text line one</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Post booking button text line one</h2>
                         <input
-                            className="w-full p-4 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="reservation_line_one"
                             type="text"
                             name="reservation_line_one"
@@ -253,10 +253,10 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.reservation_line_one}
                         />
                     </div>
-                    <div className="field mt-4">
-                        <h1 className="text-xl">Post booking button text line two</h1>
+                    <div className="field">
+                        <h2 className="text-lg md:text-xl font-semibold text-black mb-2 md:mb-3">Post booking button text line two</h2>
                         <input
-                            className="w-full p-4 mb-5 border border-gray-300 rounded-md"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
                             placeholder="reservation_line_two"
                             type="text"
                             name="reservation_line_two"
@@ -264,24 +264,24 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                             value={formData.reservation_line_two}
                         />
                     </div>
-                    <p className="text-md">Please note that to update contact details, please go to the <strong><a href="/updateContact/${contentId}/contact">contact us section</a></strong></p>
-                    <div className="flex justify-center mt-10 gap-4">
+                    <p className="text-sm md:text-base text-gray-700">Please note that to update contact details, please go to the <strong><a href="/updateContact/${contentId}/contact" className="text-blue-600 hover:text-blue-800">contact us section</a></strong></p>
+                    <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-4 mt-8 md:mt-10">
                         <button
                             onClick={() => navigate(`/dashboard`)}
-                            className="mb-5 rounded-xl w-full sm:w-96 h-12 bg-black text-beige hover:bg-opacity-50"
+                            className="w-full md:w-auto rounded-xl h-12 md:h-14 bg-black text-beige hover:bg-opacity-50 text-sm md:text-base font-semibold"
                         >
                             Cancel and return to dashboard
                         </button>
 
                         <button
                             onClick={() => navigate(`/EditMainPage`)}
-                            className="mb-5 rounded-xl w-full sm:w-96 h-12 bg-black text-beige hover:bg-opacity-50"
+                            className="w-full md:w-auto rounded-xl h-12 md:h-14 bg-black text-beige hover:bg-opacity-50 text-sm md:text-base font-semibold"
                         >
                             Cancel and return to edit page
                         </button>
                         <button
                             onClick={handleSubmit}
-                            className="mb-5 rounded-xl w-full sm:w-96 h-12 bg-black text-beige hover:bg-opacity-50"
+                            className="w-full md:w-auto rounded-xl h-12 md:h-14 bg-black text-beige hover:bg-opacity-50 text-sm md:text-base font-semibold"
                         >
                             Update and return to dashboard
                         </button>
@@ -289,22 +289,21 @@ export default function UpdateReservation({ content, setContent, user, setUser }
                 </form>
             </div>
         </div>
-        :
-        <div className="m-28">
-            <div className="mb-10">
-                <h1 className="text-3xl">You are not loged in, please login before entering the user content</h1>
+            :
+            <div className="min-h-screen bg-gray-50 px-4 py-8 md:py-12 flex flex-col items-center justify-center">
+                <div className="text-center max-w-md mx-auto">
+                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-black mb-6 md:mb-8">You are not logged in, please login before entering the user content</h1>
+                    <a href="/login">
+                        <button
+                            onClick={() => {
+                                window.location.href = "/login";
+                            }}
+                            className="w-full md:w-auto rounded-xl h-12 md:h-14 bg-black text-beige text-sm md:text-base font-semibold">
+                            Login
+                        </button>
+                    </a>
+                </div>
             </div>
-            <div>
-                <a href="/login">
-                    <button
-                        onClick={() => {
-                            window.location.href = "/login";
-                        }}
-                        className="rounded-full w-96 h-12 bg-black text-beige">Login
-                    </button>
-                </a>
-            </div>
-        </div>
-    )}
+        )}
     </>
 }
