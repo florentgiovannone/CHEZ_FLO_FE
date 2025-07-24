@@ -75,7 +75,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
 
         } catch (err) {
             console.error("Error creating menu:", err);
-            console.log("Failed to create menu. Please try again.");
+            alert("Failed to create menu. Please try again.");
         }
     }
 
@@ -222,7 +222,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
             const successMessage = isScheduled
                 ? `Menu update scheduled for ${new Date(scheduledAt).toLocaleString()}`
                 : 'Menu updated immediately';
-            console.log(successMessage);
+            alert(successMessage);
 
             setFormData({});
             setShowUpdateForm(false);
@@ -234,7 +234,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
             console.error("Error updating menu:", err);
             console.error("Error response:", err.response?.data);
             const errorMessage = err.response?.data?.message || err.message || "Failed to update menu. Please try again.";
-            console.log(`Error: ${errorMessage}`);
+            alert(`Error: ${errorMessage}`);
         }
     }
 
@@ -258,7 +258,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
             });
         } catch (error) {
             console.error("Delete failed:", error)
-            console.log("Something went wrong.")
+            alert("Something went wrong.")
         }
     }
 
