@@ -42,7 +42,11 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                 {
                     menus_url: formData.menus_url,
                     menus_type: formData.menus_type,
-                    menus_text: capitalise(formData.menus_type) // Capitalize the menu type for the text
+                    menus_text: capitalise(formData.menus_type), // Capitalize the menu type for the text
+                    scheduled_at: formData.scheduled_at || null,
+                    scheduled_text: formData.scheduled_text || "",
+                    scheduled_url: formData.scheduled_url || "",
+                    applied: false
                 },
                 {
                     headers: { Authorization: `Bearer ${token}` }
@@ -89,7 +93,6 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
         });
         setAddMenu(true)
     }
-
     // Handle input changes
     function handleChange(e: any) {
         const fieldName = e.target.name;
@@ -166,13 +169,27 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
         e.preventDefault();
         if (!selectedMenu) return;
         try {
+            const scheduledAt = formData[`scheduled_at_${selectedMenu.id}`];
+            const isScheduled = scheduledAt && new Date(scheduledAt) > new Date();
+
+            // Prepare data based on whether it's scheduled or immediate
+            const updateData: any = {
+                menus_text: formData[`menus_text_${selectedMenu.id}`],
+                menus_url: formData[`menus_url_${selectedMenu.id}`] || selectedMenu.menus_url,
+                menus_type: formData[`menus_type_${selectedMenu.id}`] || selectedMenu.menus_type,
+            };
+
+            // Add scheduled_at only if it's a future date
+            if (isScheduled) {
+                updateData.scheduled_at = scheduledAt;
+            }
+
+            console.log('Sending update data:', updateData);
+            console.log('Is scheduled update:', isScheduled);
+
             const response = await axios.put(
                 `${baseUrl}/content/${contentId}/menus/${selectedMenu.menus_type}`,
-                {
-                    menus_url: formData[`menus_url_${selectedMenu.id}`],
-                    menus_type: formData[`menus_type_${selectedMenu.id}`],
-                    menus_text: formData[`menus_text_${selectedMenu.id}`]
-                },
+                updateData,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -180,6 +197,8 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                     }
                 }
             );
+
+            console.log('Update response:', response.data);
 
             if (response.data) {
                 setMenus((prev: any[]) => prev.map((menu: { id: string }) =>
@@ -199,15 +218,23 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                 }
             }
 
+            // Show success message
+            const successMessage = isScheduled
+                ? `Menu update scheduled for ${new Date(scheduledAt).toLocaleString()}`
+                : 'Menu updated immediately';
+            alert(successMessage);
+
             setFormData({});
             setShowUpdateForm(false);
             setSelectedMenu(null);
             setShowDeleted(true);
             setTimeout(() => setShowDeleted(false), 3000);
 
-        } catch (err) {
+        } catch (err: any) {
             console.error("Error updating menu:", err);
-            alert("Failed to update menu. Please try again.");
+            console.error("Error response:", err.response?.data);
+            const errorMessage = err.response?.data?.message || err.message || "Failed to update menu. Please try again.";
+            alert(`Error: ${errorMessage}`);
         }
     }
 
@@ -243,6 +270,20 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
 
     // map the menus to the menu list
     const menuMap = () => {
+        // Debug: log the menus data to see what we're working with
+        console.log('Raw menus data:', menus);
+
+        // Filter out any invalid menu items
+        const validMenus = menus.filter(menu =>
+            menu &&
+            typeof menu === 'object' &&
+            menu.id &&
+            menu.menus_type !== undefined &&
+            menu.menus_type !== null
+        );
+
+        console.log('Valid menus after filtering:', validMenus);
+
         // Define the desired order of menu types
         const menuOrder = [
             'breakfast',
@@ -254,9 +295,13 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
         ];
 
         // Sort the menus based on the defined order
-        const sortedMenus = [...menus].sort((a, b) => {
-            const indexA = menuOrder.indexOf(a.menus_type.toLowerCase());
-            const indexB = menuOrder.indexOf(b.menus_type.toLowerCase());
+        const sortedMenus = [...validMenus].sort((a, b) => {
+            // Safety check: ensure menus_type exists and is a string
+            const typeA = a.menus_type?.toLowerCase() || '';
+            const typeB = b.menus_type?.toLowerCase() || '';
+
+            const indexA = menuOrder.indexOf(typeA);
+            const indexB = menuOrder.indexOf(typeB);
 
             // If both types are in the order list, sort by their position
             if (indexA !== -1 && indexB !== -1) {
@@ -268,7 +313,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
             if (indexB !== -1) return 1;
 
             // If neither type is in the order list, sort alphabetically
-            return a.menus_type.localeCompare(b.menus_type);
+            return typeA.localeCompare(typeB);
         });
 
         return sortedMenus.map((menu: IMenus) => (
@@ -278,7 +323,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
             >
                 {selectedMenu?.id === menu.id && showUpdateForm ? (
                     <div key={`form-${menu.id}`} className="space-y-3">
-                        <div className="w-full h-40">
+                        <div className="w-full h-70">
                             <iframe
                                 src={menu.menus_url ? menu.menus_url.toString() : ''}
                                 className="w-full h-full rounded-lg border-4 border-black cursor-pointer hover:border-beige transition-all duration-200"
@@ -287,23 +332,31 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                             />
                         </div>
                         <form key={`form-inner-${menu.id}`} className="space-y-3">
-                            <textarea
+                            <input
                                 key={`textarea-${menu.id}`}
                                 placeholder="Menu name"
                                 onChange={handleChange}
                                 name={`menus_text_${menu.id}`}
                                 value={formData[`menus_text_${menu.id}`] || ""}
-                                className="text-black border border-gray-300 rounded-lg p-3 w-full text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
+                                className="text-black border border-gray-300 rounded-lg p-3 w-full h-12 text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
                             />
-                            <textarea
-                                key={`textarea-${menu.id}`}
-                                placeholder="To add a PDF, please click on the add a menu button"
-                                onChange={handleChange}
-                                name={`menus_url_${menu.id}`}
-                                value={formData[`menus_url_${menu.id}`] || ""}
-                                className="text-black border border-gray-300 rounded-lg p-3 w-full bg-beige text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
-                                disabled={true}
-                            />
+                            <div key={`schedule-${menu.id}`} className="flex flex-col gap-2">
+                                <label htmlFor={`scheduled_at_${menu.id}`} className="text-sm font-semibold">
+                                    Schedule for:
+                                </label>
+                                <input
+                                    type="datetime-local"
+                                    id={`scheduled_at_${menu.id}`}
+                                    name={`scheduled_at_${menu.id}`}
+                                    value={formData[`scheduled_at_${menu.id}`] || ""}
+                                    onChange={handleChange}
+                                    className="w-full bg-beige text-black border border-gray-300 rounded-lg p-3 text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
+                                    min={new Date().toISOString().slice(0, 16)} // Prevent selecting past dates
+                                />
+                                <small className="text-gray-600">
+                                    Leave empty to publish immediately, or select a future date/time to schedule
+                                </small>
+                            </div>
                             <div key={`buttons-${menu.id}`} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 <button
                                     key={`upload-btn-${menu.id}`}
@@ -455,6 +508,25 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                                             />
                                         </div>
                                     </div>
+
+                                    {/* Schedule Date/Time */}
+                                    <div className="space-y-2">
+                                        <label className="text-sm sm:text-base font-semibold text-beige">
+                                            Schedule for (optional)
+                                        </label>
+                                        <input
+                                            type="datetime-local"
+                                            name="scheduled_at"
+                                            value={formData.scheduled_at || ""}
+                                            onChange={handleChange}
+                                            className="w-full bg-beige text-black border border-gray-300 rounded-lg p-3 text-sm sm:text-base focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
+                                            min={new Date().toISOString().slice(0, 16)}
+                                        />
+                                        <small className="text-gray-400">
+                                            Leave empty to publish immediately, or select a future date/time to schedule
+                                        </small>
+                                    </div>
+
                                     {!uploadButton && (
                                         <div className="flex flex-col sm:flex-row gap-3">
                                             <button

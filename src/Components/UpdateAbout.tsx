@@ -65,7 +65,7 @@ export default function UpdateAbout({ content, setContent, user }: UpdateAboutPr
                 <form className="space-y-4 md:space-y-6">
                     <div className="field">
                         <input
-                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base"
+                            className="w-full p-3 md:p-4 border border-gray-300 rounded-md text-sm md:text-base hover:bg-black hover:text-beige hover:cursor-pointer"
                             placeholder="about_title"
                             type="text"
                             name="about_title"
