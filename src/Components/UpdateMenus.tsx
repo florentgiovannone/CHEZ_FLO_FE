@@ -53,8 +53,6 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                 }
             );
 
-            console.log("Menu created:", response.data); // Add logging to debug
-
             setMenus((prev: any) => [...prev, response.data]);
 
             if (menus) {
@@ -83,6 +81,37 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
     function capitalise(text: string): string {
         if (!text) return '';
         return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    }
+
+    // Helper function to format date in custom format
+    function formatCustomDate(dateInput: string | Date): string {
+        const date = new Date(dateInput);
+
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const months = ['January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'];
+
+        const dayName = days[date.getDay()];
+        const day = date.getDate();
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+
+        // Get ordinal suffix
+        const getOrdinalSuffix = (n: number): string => {
+            if (n >= 11 && n <= 13) return 'th';
+            switch (n % 10) {
+                case 1: return 'st';
+                case 2: return 'nd';
+                case 3: return 'rd';
+                default: return 'th';
+            }
+        };
+
+        const ordinalDay = `${day}${getOrdinalSuffix(day)}`;
+
+        return `${dayName} ${ordinalDay} of ${month} ${year} at ${hours}:${minutes} BST`;
     }
 
     // Handle the addition of a new menu
@@ -143,8 +172,6 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                     return;
                 }
                 if (result && result.event === "success") {
-                    console.log("Uploaded URL:", result.info.secure_url);
-                    console.log("Public ID:", result.info.public_id);
                     if (selectedMenu) {
                         setFormData(prev => ({
                             ...prev,
@@ -168,8 +195,25 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
     async function handlePut(e: SyntheticEvent) {
         e.preventDefault();
         if (!selectedMenu) return;
+
+        // Check if any changes have been made
+        const currentMenuText = formData[`menus_text_${selectedMenu.id}`];
+        const currentMenuUrl = formData[`menus_url_${selectedMenu.id}`];
+        const currentMenuType = formData[`menus_type_${selectedMenu.id}`];
+        const scheduledAt = formData[`scheduled_at_${selectedMenu.id}`];
+
+        const hasTextChanged = currentMenuText && currentMenuText !== selectedMenu.menus_text;
+        const hasUrlChanged = currentMenuUrl && currentMenuUrl !== selectedMenu.menus_url;
+        const hasTypeChanged = currentMenuType && currentMenuType !== selectedMenu.menus_type;
+        const hasScheduledDate = scheduledAt && scheduledAt.trim() !== '';
+
+        // If no content changes have been made (only checking actual content, not scheduled date), show alert and return
+        if (!hasTextChanged && !hasUrlChanged && !hasTypeChanged) {
+            alert("Please edit the file before saving");
+            return;
+        }
+
         try {
-            const scheduledAt = formData[`scheduled_at_${selectedMenu.id}`];
             const isScheduled = scheduledAt && new Date(scheduledAt) > new Date();
 
             // Prepare data based on whether it's scheduled or immediate
@@ -184,9 +228,6 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                 updateData.scheduled_at = scheduledAt;
             }
 
-            console.log('Sending update data:', updateData);
-            console.log('Is scheduled update:', isScheduled);
-
             const response = await axios.put(
                 `${baseUrl}/content/${contentId}/menus/${selectedMenu.menus_type}`,
                 updateData,
@@ -197,8 +238,6 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                     }
                 }
             );
-
-            console.log('Update response:', response.data);
 
             if (response.data) {
                 setMenus((prev: any[]) => prev.map((menu: { id: string }) =>
@@ -220,7 +259,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
 
             // Show success message
             const successMessage = isScheduled
-                ? `Menu update scheduled for ${new Date(scheduledAt).toLocaleString()}`
+                ? `Menu update scheduled for ${formatCustomDate(scheduledAt)}`
                 : 'Menu updated immediately';
             alert(successMessage);
 
@@ -270,8 +309,6 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
 
     // map the menus to the menu list
     const menuMap = () => {
-        // Debug: log the menus data to see what we're working with
-        console.log('Raw menus data:', menus);
 
         // Filter out any invalid menu items
         const validMenus = menus.filter(menu =>
@@ -281,8 +318,6 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
             menu.menus_type !== undefined &&
             menu.menus_type !== null
         );
-
-        console.log('Valid menus after filtering:', validMenus);
 
         // Define the desired order of menu types
         const menuOrder = [
@@ -394,22 +429,27 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                         </form>
                     </div>
                 ) : (
-                    <div className="space-y-3">
-                        <div className="w-full h-40 flex justify-center items-center">
-                            <iframe
-                                src={menu.menus_url ? menu.menus_url.toString() : ''}
-                                className="w-full h-full rounded-lg border-4 border-black cursor-pointer hover:border-beige transition-all duration-200"
-                                title={`${menu.menus_text} menu preview`}
-                                onClick={() => window.open(menu.menus_url ? menu.menus_url.toString() : '', '_blank')}
-                            />
-                        </div>
-                        <a href={menu.menus_url ? menu.menus_url.toString() : ''} className="block" target="_blank">
-                            <div key={`id-${menu.id}`} className="text-center text-sm sm:text-base font-medium">
-                                {menu.menus_text}
+                    <div className="flex flex-col h-full">
+                        <div className="flex-grow space-y-3">
+                            <div className="w-full h-40 flex justify-center items-center">
+                                <iframe
+                                    src={menu.menus_url ? menu.menus_url.toString() : ''}
+                                    className="w-full h-full rounded-lg border-4 border-black cursor-pointer hover:border-beige transition-all duration-200"
+                                    title={`${menu.menus_text} menu preview`}
+                                    onClick={() => window.open(menu.menus_url ? menu.menus_url.toString() : '', '_blank')}
+                                />
                             </div>
-                        </a>
+                            <a href={menu.menus_url ? menu.menus_url.toString() : ''} className="block" target="_blank">
+                                <div key={`id-${menu.id}`} className="text-center text-sm sm:text-base font-medium">
+                                    {menu.menus_text}
+                                </div>
+                                <div key={`ids-${menu.id}`} className="text-center text-sm sm:text-base font-medium">
+                                    {menu.scheduled_at ? `Change scheduled for: ${formatCustomDate(menu.scheduled_at)}` : 'Not scheduled'}
+                                </div>
+                            </a>
+                        </div>
                         {!(selectedMenu?.id === menu.id && showUpdateForm) && (
-                            <div className="space-y-2">
+                            <div className="space-y-2 mt-auto">
                                 <button
                                     key={`update-action-${menu.id}`}
                                     onClick={(e) => {
