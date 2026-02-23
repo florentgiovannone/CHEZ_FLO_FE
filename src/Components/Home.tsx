@@ -24,8 +24,6 @@ interface ContentProps {
   setGrid: Function;
 }
 
-
-
 const Home = ({ content, setContent, menus, grid, setGrid }: ContentProps) => {
 
   function slideMap() {

@@ -444,7 +444,7 @@ export default function UpdateMenus({ content, setContent, menus, setMenus, user
                                     {menu.menus_text}
                                 </div>
                                 <div key={`ids-${menu.id}`} className="text-center text-sm sm:text-base font-medium">
-                                    {menu.scheduled_at ? `Change scheduled for: ${formatCustomDate(menu.scheduled_at)}` : 'Not scheduled'}
+                                    {menu.scheduled_at ? `Change scheduled for: ${formatCustomDate(menu.scheduled_at)}` : 'No change scheduled'}
                                 </div>
                             </a>
                         </div>
